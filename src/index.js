@@ -1,10 +1,10 @@
-import { roundTo } from "./utils/roundTo";
+import { roundTo } from './utils/roundTo';
 
 /**
  * DIviding RECTangles manager for NMR spectra optimization
  * @param {Array} prediction - Prediction obtained with SPINUS
  */
-export default class DirectHelper {
+export default class DirectManager {
   constructor(prediction) {
     this.prediction = prediction;
     let parameters = [];
@@ -14,43 +14,40 @@ export default class DirectHelper {
       item.multiplicity = atom.multiplicity;
       item.j = [];
       for (let j of atom.j) {
-        item.j.push(j.coupling)
+        item.j.push(j.coupling);
       }
-      parameters.push(item)
+      parameters.push(item);
     }
     this.parameters = parameters;
   }
-  
+
   getParameters() {
     return this.parameters;
   }
-  
+
   suggestBoundaries(options = {}) {
     const parameters = this.parameters;
-    const {
-      width = 0.1,
-    } = options;
+    const { error = 0.1 } = options;
     let result = [];
     for (let parameter of parameters) {
       let atom = {};
-      atom.lowerDelta = roundTo(parameter.delta - width);
-      atom.upperDelta = roundTo(parameter.delta + width);
+      atom.lowerDelta = roundTo(parameter.delta - error);
+      atom.upperDelta = roundTo(parameter.delta + error);
       atom.lowerJcoupling = [];
       atom.upperJcoupling = [];
       for (let coupling of parameter.j) {
-        atom.lowerJcoupling.push(roundTo(coupling - width));
-        atom.upperJcoupling.push(roundTo(coupling + width));
+        atom.lowerJcoupling.push(roundTo(coupling - error));
+        atom.upperJcoupling.push(roundTo(coupling + error));
       }
-      result.push(atom)
+      result.push(atom);
     }
     return result;
   }
-  
-  getBoundaries(options={}){
-    const {
-      boundaries = this.suggestBoundaries(),
-    } = options
-    let result = { lower: [], upper: [] }
+
+  getBoundaries(options = {}) {
+    const { error = 0.1 } = options;
+    const boundaries = this.suggestBoundaries({ error: error})
+    let result = { lower: [], upper: [] };
     for (let atom of boundaries) {
       result.lower.push(atom.lowerDelta);
       result.upper.push(atom.upperDelta);
@@ -61,19 +58,19 @@ export default class DirectHelper {
     }
     return result;
   }
-  
+
   tidyUpParameters() {
     let result = this.prediction.slice();
     let counter = 0;
-    return function(parameters) {
+    return function (parameters) {
       for (let atom of result) {
         atom.delta = parameters[counter++];
-        for (let jcoupling of atom.j){
+        for (let jcoupling of atom.j) {
           jcoupling.coupling = parameters[counter++];
         }
       }
       counter = 0;
       return result;
-    }
+    };
   }
 }

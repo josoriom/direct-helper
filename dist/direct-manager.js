@@ -1,21 +1,37 @@
 /**
- * direct-helper - helper
+ * direct-manager - manager
  * @version v0.0.0
- * @link https://github.com/cheminfo/direct-helper#readme
+ * @link https://github.com/cheminfo/direct-manager#readme
  * @license MIT
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.directHelper = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.directManager = factory());
 }(this, (function () { 'use strict';
 
   /**
-   * Returns a very important number
+   * Returns the number with the decimal places specified in the options
+   * @param {number} number - The number to be rounded.
+   * @param {Object} [options={}]
+   * @param {number} [options.decimals] - Number of decimals.
    * @return {number}
    */
-  class DirectHelper {
-    constructor(prediction, options = {}) {
+  function roundTo(number, options = {}) {
+    const {
+      decimals = 4
+    } = options;
+    const power = 10 ** decimals;
+    return Math.round(number * power) / power;
+  }
+
+  /**
+   * DIviding RECTangles manager for NMR spectra optimization
+   * @param {Array} prediction - Prediction obtained with SPINUS
+   */
+
+  class DirectManager {
+    constructor(prediction) {
       this.prediction = prediction;
       let parameters = [];
 
@@ -105,15 +121,7 @@
 
   }
 
-  function roundTo(number, options = {}) {
-    const {
-      decimals = 4
-    } = options;
-    const power = 10 ** decimals;
-    return Math.round(number * power) / power;
-  }
-
-  return DirectHelper;
+  return DirectManager;
 
 })));
-//# sourceMappingURL=direct-helper.js.map
+//# sourceMappingURL=direct-manager.js.map
