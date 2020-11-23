@@ -18,15 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cheminfo/direct-manager.git"
+    "url": "git+https://github.com/josoriom/direct-manager.git"
   },
   "keywords": [],
   "author": "Moreno. W, Osorio. J",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cheminfo/direct-manager/issues"
+    "url": "https://github.com/josoriom/direct-manager/issues"
   },
-  "homepage": "https://github.com/cheminfo/direct-manager#readme",
+  "homepage": "https://github.com/josoriom/direct-manager#readme",
   "jest": {
     "testEnvironment": "node"
   },
