@@ -20,8 +20,8 @@ describe('test myModule', () => {
 
   it('It should suggest boundaries twigTemplate', () => {
     const boundaries = directManager.getBoundaries({ error: 0.2 });
-    expect(boundaries.lower).toStrictEqual([2.411,6.962,0.75,6.962]);
-    expect(boundaries.upper).toStrictEqual([2.811,7.362,1.15,7.362]);
+    expect(boundaries.lower).toStrictEqual([2.411, 6.962, 0.75, 6.962]);
+    expect(boundaries.upper).toStrictEqual([2.811, 7.362, 1.15, 7.362]);
   });
 
   it('It should build boundaries', () => {
@@ -32,7 +32,7 @@ describe('test myModule', () => {
       lowerJcoupling: [6.962],
       upperJcoupling: [7.362],
     });
-    
+
     expect(suggestedBoundaries[1]).toStrictEqual({
       lowerDelta: 0.75,
       upperDelta: 1.15,
