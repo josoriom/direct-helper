@@ -44,9 +44,11 @@ export default class DirectManager {
     return result;
   }
 
-  getBoundaries(options = {}) {
-    const { error = 0.1 } = options;
-    const boundaries = this.suggestBoundaries({ error: error });
+  getBoundaries(boundaries, options = {}) {
+    let { error = 0.1 } = options;
+    boundaries = boundaries
+      ? boundaries
+      : this.suggestBoundaries({ error: error });
     let result = { lower: [], upper: [] };
     for (let atom of boundaries) {
       result.lower.push(atom.lowerDelta);

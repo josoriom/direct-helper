@@ -1,7 +1,7 @@
 /**
  * direct-manager - manager
  * @version v0.0.0
- * @link https://github.com/cheminfo/direct-manager#readme
+ * @link https://github.com/josoriom/direct-manager#readme
  * @license MIT
  */
 (function (global, factory) {
@@ -58,20 +58,20 @@
     suggestBoundaries(options = {}) {
       const parameters = this.parameters;
       const {
-        width = 0.1
+        error = 0.1
       } = options;
       let result = [];
 
       for (let parameter of parameters) {
         let atom = {};
-        atom.lowerDelta = roundTo(parameter.delta - width);
-        atom.upperDelta = roundTo(parameter.delta + width);
+        atom.lowerDelta = roundTo(parameter.delta - error);
+        atom.upperDelta = roundTo(parameter.delta + error);
         atom.lowerJcoupling = [];
         atom.upperJcoupling = [];
 
         for (let coupling of parameter.j) {
-          atom.lowerJcoupling.push(roundTo(coupling - width));
-          atom.upperJcoupling.push(roundTo(coupling + width));
+          atom.lowerJcoupling.push(roundTo(coupling - error));
+          atom.upperJcoupling.push(roundTo(coupling + error));
         }
 
         result.push(atom);
@@ -80,10 +80,13 @@
       return result;
     }
 
-    getBoundaries(options = {}) {
-      const {
-        boundaries = this.suggestBoundaries()
+    getBoundaries(boundaries, options = {}) {
+      let {
+        error = 0.1
       } = options;
+      boundaries = boundaries ? boundaries : this.suggestBoundaries({
+        error: error
+      });
       let result = {
         lower: [],
         upper: []
