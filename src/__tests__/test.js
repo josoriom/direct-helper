@@ -20,7 +20,7 @@ describe('test myModule', () => {
   });
 
   it('Suggest boundaries twigTemplate', () => {
-    const boundaries = directManager.getBoundaries({ error: 0.2 });
+    const boundaries = directManager.getBoundaries(undefined, { error: 0.2 });
     expect(boundaries.lower).toStrictEqual([2.411, 6.962, 0.75, 6.962]);
     expect(boundaries.upper).toStrictEqual([2.811, 7.362, 1.15, 7.362]);
   });

@@ -73,9 +73,9 @@ function objectiveFunction(parameters) {
 
 ## Cheminfo tools
 
-[ml-direct](https://github.com/mljs/direct-optimization)
-[spectra-data](https://github.com/cheminfo-js/spectra/tree/master/packages/spectra-data)
-[nmr-predictor](https://github.com/cheminfo-js/spectra/tree/master/packages/nmr-predictor)
+* [ml-direct](https://github.com/mljs/direct-optimization)
+* [spectra-data](https://github.com/cheminfo-js/spectra/tree/master/packages/spectra-data)
+* [nmr-predictor](https://github.com/cheminfo-js/spectra/tree/master/packages/nmr-predictor)
 
 ## License
 
