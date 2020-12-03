@@ -1,3 +1,4 @@
+import { getCouplings } from './utils/getCouplings';
 import { roundTo } from './utils/roundTo';
 
 /**
@@ -6,7 +7,7 @@ import { roundTo } from './utils/roundTo';
  */
 export default class DirectManager {
   constructor(prediction) {
-    this.prediction = prediction;
+    this.prediction = prediction.slice();
     let parameters = [];
     for (let atom of prediction) {
       let item = {};
@@ -75,4 +76,81 @@ export default class DirectManager {
       return result;
     };
   }
+
+  getSimplifiedParameters() {
+    let prediction = this.prediction.slice();
+    let couplings = getCouplings(prediction);
+    let result = [];
+    for (let coupling of couplings) {
+      result.push({
+        type: 'coupling',
+        atom: coupling.ids,
+        value: coupling.coupling,
+      });
+    }
+    for (let atom of prediction) {
+      result.push({
+        type: 'delta',
+        atom: atom.diaIDs[0],
+        value: atom.delta,
+      });
+    }
+    return result;
+  }
+
+  suggestSimplifiedBoundaries(options = {}) {
+    const parameters = this.getSimplifiedParameters();
+    const { error = 0.1 } = options;
+    let result = [];
+    for (let parameter of parameters) {
+      let atom = {};
+      atom.atom = parameter.atom;
+      atom.type = parameter.type;
+      atom.lower = roundTo(parameter.value - error);
+      atom.upper = roundTo(parameter.value + error);
+      result.push(atom);
+    }
+    return result;
+  }
+
+  getSimplifiedBoundaries(boundaries, options = {}) {
+    let { error = 0.1 } = options;
+    boundaries = boundaries
+      ? boundaries
+      : this.suggestSimplifiedBoundaries({ error: error });
+    let result = { lower: [], upper: [] };
+    for (let parameter of boundaries) {
+      result.lower.push(parameter.lower);
+      result.upper.push(parameter.upper);
+    }
+    return result;
+  }
+
+  tidyUpSimplifiedParameters() {
+    let result = this.prediction.slice();
+    let couplings = getCouplings(result);
+    let counter = 0;
+    return function (parameters) {
+      for (let i = 0; i < couplings.length; i++) {
+        couplings[i].coupling = parameters[i];
+      }
+      counter += couplings.length;
+      for (let atom of result) {
+        let relatedAtoms = findAtom(atom.diaIDs[0], couplings);
+        atom.delta = parameters[counter++];
+        for (let jcoupling of atom.j) {
+          jcoupling.coupling = findAtom(
+            jcoupling.diaID,
+            relatedAtoms,
+          )[0].coupling;
+        }
+      }
+      counter = 0;
+      return result;
+    };
+  }
+}
+
+function findAtom(id, couplings) {
+  return couplings.filter((item) => item.ids.find((element) => element === id));
 }
