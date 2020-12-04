@@ -1,6 +1,6 @@
 /**
  * direct-manager - manager
- * @version v0.0.0
+ * @version v0.0.4
  * @link https://github.com/josoriom/direct-manager#readme
  * @license MIT
  */
@@ -9,6 +9,39 @@
   typeof define === 'function' && define.amd ? define(factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.directManager = factory());
 }(this, (function () { 'use strict';
+
+  /**
+   * Returns the couplings in the prediction file.
+   * @param {Array} prediction - Prediction obtained with SPINUS
+   * @return {Array}
+   */
+  function getCouplings(prediction) {
+    prediction = prediction.slice();
+    let parameters = [];
+
+    for (let i = 0; i < prediction.length; i++) {
+      for (let j = 0; j < prediction[i].j.length; j++) {
+        let item = {
+          ids: [],
+          coupling: undefined
+        };
+        item.ids = prediction[i].diaIDs.slice();
+        item.ids.push(prediction[i].j[j].diaID);
+        item.coupling = prediction[i].j[j].coupling;
+        parameters.push(item);
+      }
+    }
+
+    let result = parameters.filter(function (currentValue) {
+      if (!this.find(item => item === currentValue.coupling)) {
+        this.push(currentValue.coupling);
+        return true;
+      } else {
+        return false;
+      }
+    }, []);
+    return result;
+  }
 
   /**
    * Returns the number with the decimal places specified in the options
@@ -32,31 +65,38 @@
 
   class DirectManager {
     constructor(prediction) {
-      this.prediction = prediction;
-      let parameters = [];
-
-      for (let atom of prediction) {
-        let item = {};
-        item.delta = atom.delta;
-        item.multiplicity = atom.multiplicity;
-        item.j = [];
-
-        for (let j of atom.j) {
-          item.j.push(j.coupling);
-        }
-
-        parameters.push(item);
-      }
-
-      this.parameters = parameters;
+      this.prediction = prediction.slice();
+      this.couplings = getCouplings(prediction);
     }
 
     getParameters() {
-      return this.parameters;
+      let prediction = this.prediction.slice();
+      let couplings = this.couplings.slice();
+      let result = [];
+
+      for (let coupling of couplings) {
+        result.push({
+          type: 'coupling',
+          atom: coupling.ids,
+          atomIDs: setAtomIDs(coupling.ids, prediction),
+          value: coupling.coupling
+        });
+      }
+
+      for (let atom of prediction) {
+        result.push({
+          type: 'delta',
+          atom: atom.diaIDs,
+          atomIDs: setAtomIDs(atom.diaIDs, prediction),
+          value: atom.delta
+        });
+      }
+
+      return result;
     }
 
     suggestBoundaries(options = {}) {
-      const parameters = this.parameters;
+      const parameters = this.getParameters();
       const {
         error = 0.1
       } = options;
@@ -64,16 +104,11 @@
 
       for (let parameter of parameters) {
         let atom = {};
-        atom.lowerDelta = roundTo(parameter.delta - error);
-        atom.upperDelta = roundTo(parameter.delta + error);
-        atom.lowerJcoupling = [];
-        atom.upperJcoupling = [];
-
-        for (let coupling of parameter.j) {
-          atom.lowerJcoupling.push(roundTo(coupling - error));
-          atom.upperJcoupling.push(roundTo(coupling + error));
-        }
-
+        atom.atom = parameter.atom;
+        atom.type = parameter.type;
+        atom.atomIDs = parameter.atomIDs;
+        atom.lower = roundTo(parameter.value - error);
+        atom.upper = roundTo(parameter.value + error);
         result.push(atom);
       }
 
@@ -92,14 +127,9 @@
         upper: []
       };
 
-      for (let atom of boundaries) {
-        result.lower.push(atom.lowerDelta);
-        result.upper.push(atom.upperDelta);
-
-        for (let i = 0; i < atom.lowerJcoupling.length; i++) {
-          result.lower.push(atom.lowerJcoupling[i]);
-          result.upper.push(atom.upperJcoupling[i]);
-        }
+      for (let parameter of boundaries) {
+        result.lower.push(parameter.lower);
+        result.upper.push(parameter.upper);
       }
 
       return result;
@@ -107,13 +137,21 @@
 
     tidyUpParameters() {
       let result = this.prediction.slice();
+      let couplings = this.couplings.slice();
       let counter = 0;
       return function (parameters) {
+        for (let i = 0; i < couplings.length; i++) {
+          couplings[i].coupling = parameters[i];
+        }
+
+        counter += couplings.length;
+
         for (let atom of result) {
+          let relatedAtoms = findCoupling(atom.diaIDs[0], couplings);
           atom.delta = parameters[counter++];
 
           for (let jcoupling of atom.j) {
-            jcoupling.coupling = parameters[counter++];
+            jcoupling.coupling = findCoupling(jcoupling.diaID, relatedAtoms)[0].coupling;
           }
         }
 
@@ -122,6 +160,30 @@
       };
     }
 
+  }
+
+  function findCoupling(id, couplings) {
+    let result = [];
+
+    for (let coupling of couplings) {
+      for (let value of coupling.ids) {
+        if (value === id) result.push(coupling);
+      }
+    }
+
+    return result;
+  }
+
+  function setAtomIDs(atomIDs, prediction) {
+    let IDs = prediction.map(item => item.diaIDs[0]);
+    let result = [];
+
+    for (let atomID of atomIDs) {
+      let index = IDs.indexOf(atomID);
+      result.push(`H${index + 1}`);
+    }
+
+    return result;
   }
 
   return DirectManager;
