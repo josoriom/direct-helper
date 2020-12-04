@@ -16,6 +16,11 @@ import direct from 'ml-direct';
 import DirectManager from 'direct-manager';
 import SD from 'spectra-data';
 
+// The prediction should be obtained with SPINUS.
+const directManager = new DirectManager(prediction);
+const boundaries = directManager.getBoundaries();
+const buildPredictionFile = directManager.tidyUpParameters();
+
 const spectraProperties = {
   frequency: 400,
   from: 0,
@@ -26,31 +31,6 @@ const spectraProperties = {
   output: 'xy',
 };
 
-// The prediction should be obtained with SPINUS.
-
-const prediction = [
-    {
-        atomIDs: ['11'],
-        nbAtoms: 1,
-        delta: 1.2,
-        atomLabel: 'H',
-        j:[{'assignment':['5'],'coupling':7.4,'multiplicity':'d','distance':3}, 
-           {'assignment':['6'],'coupling':7.4,'multiplicity':'d','distance':3}]
-    }, {
-        atomIDs: ['5', '6'],
-        nbAtoms: 2,
-        delta: 1.3,
-        atomLabel: 'H'
-    }
-];
-
-let predictionData = SD.NMR.fromSignals(prediction, spectraProperties);
-predictionData.setMinMax(0, 1);
-
-const target = predictionData.getYData();
-const directManager = DirectManager(prediction);
-const boundaries = directManager.getBoundaries();
-
 const predicted = direct(
   objectiveFunction,
   boundaries.lower,
@@ -58,6 +38,7 @@ const predicted = direct(
   { iterations: 10 },
 );
 
+// target: Experimental spectrum.
 function objectiveFunction(parameters) {
   const testSignals = buildPredictionFile(parameters);
   const simulation = SD.NMR.fromSignals(testSignals, spectraProperties);
