@@ -60,4 +60,49 @@ describe('test myModule', () => {
       upper: 1.15,
     });
   });
+
+  it('Fill the prediction file', () => {
+    const buildPredictionFile = directManager.tidyUpParameters();
+    const result = buildPredictionFile([
+      'Parameter 1',
+      'Parameter 2',
+      'Parameter 3',
+    ]);
+
+    expect(result[0]).toStrictEqual({
+      atomIDs: ['10', '11', '12', '13', '17', '18'],
+      diaIDs: ['daz@`DBYRYmjjhb`GzP`HeT'],
+      nbAtoms: 6,
+      delta: 'Parameter 2',
+      atomLabel: 'H',
+      j: [
+        {
+          assignment: ['7', '8', '9'],
+          diaID: 'daz@`LBYRUejj`A~dHBIU@',
+          coupling: 'Parameter 1',
+          multiplicity: 'q',
+          distance: 3,
+        },
+      ],
+      multiplicity: 'q',
+    });
+
+    expect(result[1]).toStrictEqual({
+      atomIDs: ['7', '8', '9', '14', '15', '16', '19', '20', '21'],
+      diaIDs: ['daz@`LBYRUejj`A~dHBIU@'],
+      nbAtoms: 9,
+      delta: 'Parameter 3',
+      atomLabel: 'H',
+      j: [
+        {
+          assignment: ['10', '11'],
+          diaID: 'daz@`DBYRYmjjhb`GzP`HeT',
+          coupling: 'Parameter 1',
+          multiplicity: 't',
+          distance: 3,
+        },
+      ],
+      multiplicity: 't',
+    });
+  });
 });
