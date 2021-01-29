@@ -76,10 +76,8 @@ export default class DirectManager {
         let relatedAtoms = findCoupling(atom.diaIDs[0], couplings);
         atom.delta = parameters[counter++];
         for (let jcoupling of atom.j) {
-          jcoupling.coupling = findCoupling(
-            jcoupling.diaID,
-            relatedAtoms,
-          )[0].coupling;
+          const coupling = findCoupling(jcoupling.diaID, relatedAtoms);
+          jcoupling.coupling = coupling[0] ? coupling[0].coupling : [];
         }
       }
       counter = 0;

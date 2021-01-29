@@ -151,7 +151,8 @@
           atom.delta = parameters[counter++];
 
           for (let jcoupling of atom.j) {
-            jcoupling.coupling = findCoupling(jcoupling.diaID, relatedAtoms)[0].coupling;
+            const coupling = findCoupling(jcoupling.diaID, relatedAtoms);
+            jcoupling.coupling = coupling[0] ? coupling[0].coupling : [];
           }
         }
 
