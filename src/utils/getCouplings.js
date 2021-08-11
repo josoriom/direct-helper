@@ -1,15 +1,15 @@
 /**
  * Returns the couplings in the prediction file.
- * @param {Array} prediction - Prediction obtained with SPINUS
+ * @param {Array} json - Prediction obtained with SPINUS
  * @return {Array}
  */
 
-export function getCouplings(prediction) {
-  prediction = prediction.slice();
-  let parameters = [];
+export function getCouplings(json) {
+  const prediction = json.slice();
+  const parameters = [];
   for (let i = 0; i < prediction.length; i++) {
     for (let j = 0; j < prediction[i].j.length; j++) {
-      let item = { ids: [], coupling: undefined };
+      const item = { ids: [], coupling: undefined };
       item.ids = prediction[i].diaIDs.slice();
       item.ids.push(prediction[i].j[j].diaID);
       item.coupling = prediction[i].j[j].coupling;
@@ -17,7 +17,7 @@ export function getCouplings(prediction) {
     }
   }
 
-  let result = parameters.filter(function (currentValue) {
+  const result = parameters.filter(function (currentValue) {
     if (!this.find((item) => item === currentValue.coupling)) {
       this.push(currentValue.coupling);
       return true;

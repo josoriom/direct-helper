@@ -1,8 +1,7 @@
 import DirectManager from '..';
+import prediction from '../../data/prediction.json';
 
-import prediction from './prediction/test.json';
-
-describe('test myModule', () => {
+describe('Test parameters extraction', () => {
   const directManager = new DirectManager(prediction);
   it('Extract parameters', () => {
     const parameters = directManager.getParameters();
