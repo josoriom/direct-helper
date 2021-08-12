@@ -6,8 +6,15 @@
  * @return {number}
  */
 
-export function roundTo(number, options = {}) {
+export function roundTo(number: number, options: Options = {}) {
   const { decimals = 4 } = options;
   const power = 10 ** decimals;
   return Math.round(number * power) / power;
+}
+
+/**
+ * @default options.decimals 4
+ */
+interface Options {
+  decimals?: number;
 }

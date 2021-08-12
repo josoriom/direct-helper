@@ -1,20 +1,26 @@
-import { getCouplings } from './utils/getCouplings';
-import { roundTo } from './utils/roundTo';
+import { Boundaries } from './types/Boundaries';
+import { Coupling } from './types/Coupling';
+import { Parameter } from './types/Parameter';
+import { ProtonSignal } from './types/ProtonSignal';
+import { getCouplings } from './utilities/getCouplings';
+import { roundTo } from './utilities/roundTo';
 
 /**
  * DIviding RECTangles manager for NMR spectra optimization
  * @param {Array} prediction - Prediction obtained with SPINUS
  */
 export default class DirectManager {
-  constructor(prediction) {
+  public prediction: ProtonSignal[];
+  public couplings: Coupling[];
+  public constructor(prediction: ProtonSignal[]) {
     this.prediction = prediction.slice();
     this.couplings = getCouplings(prediction);
   }
 
-  getParameters() {
+  public getParameters() {
     const prediction = this.prediction.slice();
     const couplings = this.couplings.slice();
-    let result = [];
+    let result: Parameter[] = [];
     for (const coupling of couplings) {
       result.push({
         type: 'coupling',
@@ -34,40 +40,42 @@ export default class DirectManager {
     return result;
   }
 
-  suggestBoundaries(options = {}) {
+  public suggestBoundaries(options: Options = {}) {
     const parameters = this.getParameters();
     const { error = 0.1 } = options;
-    const result = [];
+    const result: Parameter[] = [];
     for (const parameter of parameters) {
-      let atom = {};
-      atom.atom = parameter.atom;
-      atom.type = parameter.type;
-      atom.atomIDs = parameter.atomIDs;
-      atom.lower = roundTo(parameter.value - error);
-      atom.upper = roundTo(parameter.value + error);
+      let atom: Parameter = {
+        atom: parameter.atom,
+        type: parameter.type,
+        value: parameter.value,
+        atomIDs: parameter.atomIDs,
+        lower: roundTo(parameter.value - error),
+        upper: roundTo(parameter.value + error),
+      };
       result.push(atom);
     }
     return result;
   }
 
-  getBoundaries(boundaries, options = {}) {
+  public getBoundaries(parameters?: Parameter[], options: Options = {}) {
     const { error = 0.1 } = options;
-    boundaries = boundaries
-      ? boundaries
+    parameters = parameters
+      ? parameters
       : this.suggestBoundaries({ error: error });
-    const result = { lower: [], upper: [] };
-    for (let parameter of boundaries) {
-      result.lower.push(parameter.lower);
-      result.upper.push(parameter.upper);
+    const result: Boundaries = { lower: [], upper: [] };
+    for (const parameter of parameters) {
+      result.lower.push(parameter.lower as number);
+      result.upper.push(parameter.upper as number);
     }
     return result;
   }
 
-  tidyUpParameters() {
+  public tidyUpParameters() {
     const result = this.prediction.slice();
     const couplings = this.couplings.slice();
     let counter = 0;
-    return function (parameters) {
+    return function (parameters: number[]) {
       for (let i = 0; i < couplings.length; i++) {
         couplings[i].coupling = parameters[i];
       }
@@ -77,7 +85,7 @@ export default class DirectManager {
         atom.delta = parameters[counter++];
         for (const jcoupling of atom.j) {
           const coupling = findCoupling(jcoupling.diaID, relatedAtoms);
-          jcoupling.coupling = coupling[0] ? coupling[0].coupling : [];
+          jcoupling.coupling = coupling[0] ? coupling[0].coupling : 0;
         }
       }
       counter = 0;
@@ -86,8 +94,8 @@ export default class DirectManager {
   }
 }
 
-function findCoupling(id, couplings) {
-  const result = [];
+function findCoupling(id: string, couplings: Coupling[]) {
+  const result: Coupling[] = [];
   for (let coupling of couplings) {
     for (let value of coupling.ids) {
       if (value === id) result.push(coupling);
@@ -96,12 +104,19 @@ function findCoupling(id, couplings) {
   return result;
 }
 
-function setAtomIDs(atomIDs, prediction) {
+function setAtomIDs(atomIDs: string[], prediction: ProtonSignal[]) {
   const IDs = prediction.map((item) => item.diaIDs[0]);
-  const result = [];
+  const result: string[] = [];
   for (const atomID of atomIDs) {
     const index = IDs.indexOf(atomID);
     result.push(`H${index + 1}`);
   }
   return result;
+}
+
+/**
+ * @default options.error [0.001]
+ */
+interface Options {
+  error?: number;
 }

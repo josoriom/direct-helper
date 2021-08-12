@@ -1,58 +1,53 @@
 {
   "name": "direct-manager",
-  "version": "0.0.4",
-  "description": "manager",
-  "main": "lib/index.js",
-  "module": "src/index.js",
+  "version": "0.0.0",
+  "description": "Manager for direct optimization",
+  "main": "./lib/index.js",
+  "module": "./lib-esm/index.js",
+  "types": "./lib/index.d.ts",
+  "keywords": [],
+  "author": "Wargner Moreno, Javier Osorio M,",
+  "license": "MIT",
   "files": [
+    "src",
     "lib",
-    "src"
+    "lib-esm"
   ],
   "scripts": {
-    "eslint": "eslint src",
+    "check-types": "tsc --noEmit",
+    "clean": "rimraf lib lib-esm",
+    "eslint": "eslint src --cache",
     "eslint-fix": "npm run eslint -- --fix",
-    "prepublishOnly": "rollup -c",
-    "test": "npm run test-coverage && npm run eslint",
-    "test-coverage": "jest --coverage",
-    "test-only": "jest"
+    "prepack": "npm run tsc",
+    "prettier": "prettier --check src",
+    "prettier-write": "prettier --write src",
+    "test": "npm run test-coverage && npm run eslint && npm run prettier && npm run check-types",
+    "test-coverage": "npm run test-only -- --coverage",
+    "test-only": "jest",
+    "tsc": "npm run clean && npm run tsc-cjs && npm run tsc-esm",
+    "tsc-cjs": "tsc --project tsconfig.cjs.json",
+    "tsc-esm": "tsc --project tsconfig.esm.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/josoriom/direct-manager.git"
   },
-  "keywords": [],
-  "author": "Moreno. W, Osorio. J",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/josoriom/direct-manager/issues"
   },
   "homepage": "https://github.com/josoriom/direct-manager#readme",
   "jest": {
+    "preset": "ts-jest",
     "testEnvironment": "node"
   },
-  "prettier": {
-    "arrowParens": "always",
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "all"
-  },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
-    "@types/jest": "^27.0.0",
+    "@types/jest": "^26.0.24",
     "eslint": "^7.32.0",
-    "eslint-config-cheminfo": "^5.2.4",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-jest": "^24.4.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-config-cheminfo-typescript": "^8.0.9",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
-    "rollup": "^2.56.2"
-  },
-  "dependencies": {
-    "cheminfo-build": "^1.1.11"
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
   }
 }
