@@ -1,4 +1,4 @@
-export interface ProtonSignal {
+export interface Signal {
   atomIDs: string[];
   diaIDs: string[];
   nbAtoms: number;
@@ -10,6 +10,8 @@ export interface ProtonSignal {
     coupling: number;
     multiplicity: string;
     distance: number;
+    selected?: boolean;
   }[];
   multiplicity: string;
+  selected?: boolean;
 }

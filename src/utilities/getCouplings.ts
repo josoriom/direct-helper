@@ -1,5 +1,5 @@
 import { Coupling } from '../types/Coupling';
-import { ProtonSignal } from '../types/ProtonSignal';
+import { Signal } from '../types/Signal';
 
 /**
  * Returns the couplings in the prediction file.
@@ -7,15 +7,17 @@ import { ProtonSignal } from '../types/ProtonSignal';
  * @return {Array}
  */
 
-export function getCouplings(json: ProtonSignal[]) {
+export function getCouplings(json: Signal[]) {
   const predictions = json.slice();
   const parameters = [];
   for (const prediction of predictions) {
     for (const coupling of prediction.j) {
-      const item: Coupling = { ids: [], coupling: 0 };
+      const item: Coupling = { ids: [], coupling: 0, selected: true };
       item.ids = prediction.diaIDs.slice();
       item.ids.push(coupling.diaID);
       item.coupling = coupling.coupling;
+      item.selected =
+        typeof coupling.selected === 'boolean' ? coupling.selected : true;
       parameters.push(item);
     }
   }

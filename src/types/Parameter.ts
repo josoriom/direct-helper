@@ -5,4 +5,5 @@ export interface Parameter {
   upper?: number;
   value: number;
   type: string;
+  selected?: boolean;
 }

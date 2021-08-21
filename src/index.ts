@@ -1,8 +1,9 @@
 import { Boundaries } from './types/Boundaries';
 import { Coupling } from './types/Coupling';
 import { Parameter } from './types/Parameter';
-import { ProtonSignal } from './types/ProtonSignal';
+import { Signal } from './types/Signal';
 import { getCouplings } from './utilities/getCouplings';
+import { getSignals } from './utilities/getSignals';
 import { roundTo } from './utilities/roundTo';
 
 /**
@@ -10,31 +11,39 @@ import { roundTo } from './utilities/roundTo';
  * @param {Array} prediction - Prediction obtained with SPINUS
  */
 export default class DirectManager {
-  public prediction: ProtonSignal[];
+  public prediction: Signal[];
   public couplings: Coupling[];
-  public constructor(prediction: ProtonSignal[]) {
+  public signals: Signal[];
+  public constructor(prediction: Signal[]) {
     this.prediction = prediction.slice();
+    this.signals = getSignals(prediction);
     this.couplings = getCouplings(prediction);
   }
 
+  public getSignals() {
+    return this.signals;
+  }
+
   public getParameters() {
-    const prediction = this.prediction.slice();
+    const signals = this.signals.slice();
     const couplings = this.couplings.slice();
     let result: Parameter[] = [];
     for (const coupling of couplings) {
       result.push({
         type: 'coupling',
         atom: coupling.ids,
-        atomIDs: setAtomIDs(coupling.ids, prediction),
+        atomIDs: setAtomIDs(coupling.ids, signals),
         value: coupling.coupling,
+        selected: coupling.selected,
       });
     }
-    for (const atom of prediction) {
+    for (const atom of signals) {
       result.push({
         type: 'delta',
         atom: atom.diaIDs,
-        atomIDs: setAtomIDs(atom.diaIDs, prediction),
+        atomIDs: setAtomIDs(atom.diaIDs, signals),
         value: atom.delta,
+        selected: atom.selected,
       });
     }
     return result;
@@ -52,6 +61,7 @@ export default class DirectManager {
         atomIDs: parameter.atomIDs,
         lower: roundTo(parameter.value - error),
         upper: roundTo(parameter.value + error),
+        selected: parameter.selected,
       };
       result.push(atom);
     }
@@ -65,6 +75,7 @@ export default class DirectManager {
       : this.suggestBoundaries({ error: error });
     const result: Boundaries = { lower: [], upper: [] };
     for (const parameter of parameters) {
+      if (!parameter.selected) continue;
       result.lower.push(parameter.lower as number);
       result.upper.push(parameter.upper as number);
     }
@@ -72,20 +83,24 @@ export default class DirectManager {
   }
 
   public tidyUpParameters() {
-    const result = this.prediction.slice();
-    const couplings = this.couplings.slice();
+    const result = this.signals.slice();
+    const couplings = this.couplings.slice().filter((item) => item.selected);
     let counter = 0;
     return function (parameters: number[]) {
-      for (let i = 0; i < couplings.length; i++) {
-        couplings[i].coupling = parameters[i];
+      for (const coupling of couplings) {
+        if (!coupling.selected) continue;
+        coupling.coupling = parameters[counter++];
       }
-      counter += couplings.length;
       for (const atom of result) {
         const relatedAtoms = findCoupling(atom.diaIDs[0], couplings);
-        atom.delta = parameters[counter++];
+        if (atom.selected) {
+          atom.delta = parameters[counter++];
+        }
+
         for (const jcoupling of atom.j) {
           const coupling = findCoupling(jcoupling.diaID, relatedAtoms);
-          jcoupling.coupling = coupling[0] ? coupling[0].coupling : 0;
+          jcoupling.coupling =
+            coupling.length === 0 ? jcoupling.coupling : coupling[0].coupling;
         }
       }
       counter = 0;
@@ -104,7 +119,7 @@ function findCoupling(id: string, couplings: Coupling[]) {
   return result;
 }
 
-function setAtomIDs(atomIDs: string[], prediction: ProtonSignal[]) {
+function setAtomIDs(atomIDs: string[], prediction: Signal[]) {
   const IDs = prediction.map((item) => item.diaIDs[0]);
   const result: string[] = [];
   for (const atomID of atomIDs) {

@@ -1,8 +1,8 @@
 import DirectManager from '..';
-import prediction from '../../data/prediction.json';
+import triethylamine from '../../predictions/triethylamine.json';
 
 describe('Test parameters extraction', () => {
-  const directManager = new DirectManager(prediction);
+  const directManager = new DirectManager(triethylamine);
   it('Extract parameters', () => {
     const parameters = directManager.getParameters();
     expect(parameters[0]).toStrictEqual({
@@ -10,6 +10,7 @@ describe('Test parameters extraction', () => {
       atom: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H1', 'H2'],
       value: 7.162,
+      selected: true,
     });
 
     expect(parameters[1]).toStrictEqual({
@@ -17,6 +18,7 @@ describe('Test parameters extraction', () => {
       atom: ['daz@`DBYRYmjjhb`GzP`HeT'],
       atomIDs: ['H1'],
       value: 2.611,
+      selected: true,
     });
 
     expect(parameters[2]).toStrictEqual({
@@ -24,6 +26,7 @@ describe('Test parameters extraction', () => {
       atom: ['daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H2'],
       value: 0.9500000000000001,
+      selected: true,
     });
   });
 
@@ -44,6 +47,7 @@ describe('Test parameters extraction', () => {
       lower: 6.962,
       upper: 7.362,
       value: 7.162,
+      selected: true,
     });
 
     expect(suggestedBoundaries[1]).toStrictEqual({
@@ -53,6 +57,7 @@ describe('Test parameters extraction', () => {
       lower: 2.411,
       upper: 2.811,
       value: 2.611,
+      selected: true,
     });
 
     expect(suggestedBoundaries[2]).toStrictEqual({
@@ -62,6 +67,7 @@ describe('Test parameters extraction', () => {
       lower: 0.75,
       upper: 1.15,
       value: 0.9500000000000001,
+      selected: true,
     });
   });
 
@@ -82,9 +88,11 @@ describe('Test parameters extraction', () => {
           coupling: 1,
           multiplicity: 'q',
           distance: 3,
+          selected: true,
         },
       ],
       multiplicity: 'q',
+      selected: true,
     });
 
     expect(result[1]).toStrictEqual({
@@ -100,9 +108,11 @@ describe('Test parameters extraction', () => {
           coupling: 1,
           multiplicity: 't',
           distance: 3,
+          selected: true,
         },
       ],
       multiplicity: 't',
+      selected: true,
     });
   });
 });
