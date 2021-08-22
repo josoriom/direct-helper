@@ -1,5 +1,6 @@
 import { Boundaries } from './types/Boundaries';
 import { Coupling } from './types/Coupling';
+import { Molecule } from './types/Molecule';
 import { Parameter } from './types/Parameter';
 import { Signal } from './types/Signal';
 import { getCouplings } from './utilities/getCouplings';
@@ -11,6 +12,14 @@ import { roundTo } from './utilities/roundTo';
  * @param {Array} prediction - Prediction obtained with SPINUS
  */
 export default class DirectManager {
+  public label?: string;
+  public smiles?: string;
+  public mf?: string;
+  public spectrum?: {
+    x: number[];
+    y: number[];
+  };
+  public type?: string;
   public prediction: Signal[];
   public couplings: Coupling[];
   public signals: Signal[];
@@ -18,10 +27,23 @@ export default class DirectManager {
     this.prediction = prediction.slice();
     this.signals = getSignals(prediction);
     this.couplings = getCouplings(prediction);
+    this.label = undefined;
+    this.smiles = undefined;
+    this.mf = undefined;
+    this.spectrum = undefined;
+    this.type = undefined;
   }
 
   public getSignals() {
     return this.signals;
+  }
+
+  public loadMolecule(molecule: Molecule) {
+    this.label = molecule.label;
+    this.smiles = molecule.smiles;
+    this.mf = molecule.mf;
+    this.spectrum = molecule.spectrum;
+    this.type = molecule.type;
   }
 
   public getParameters() {
