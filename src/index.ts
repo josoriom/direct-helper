@@ -33,8 +33,7 @@ export default class DirectManager {
         type: 'coupling',
         atom: coupling.ids,
         atomIDs: setAtomIDs(coupling.ids, signals),
-        value: coupling.coupling,
-        selected: coupling.selected,
+        value: { prediction: coupling.coupling, selected: coupling.selected },
       });
     }
     for (const atom of signals) {
@@ -42,8 +41,7 @@ export default class DirectManager {
         type: 'delta',
         atom: atom.diaIDs,
         atomIDs: setAtomIDs(atom.diaIDs, signals),
-        value: atom.delta,
-        selected: atom.selected,
+        value: { prediction: atom.delta, selected: atom.selected },
       });
     }
     return result;
@@ -57,11 +55,13 @@ export default class DirectManager {
       let atom: Parameter = {
         atom: parameter.atom,
         type: parameter.type,
-        value: parameter.value,
+        value: {
+          prediction: parameter.value.prediction,
+          lower: roundTo(parameter.value.prediction - error),
+          upper: roundTo(parameter.value.prediction + error),
+          selected: parameter.value.selected,
+        },
         atomIDs: parameter.atomIDs,
-        lower: roundTo(parameter.value - error),
-        upper: roundTo(parameter.value + error),
-        selected: parameter.selected,
       };
       result.push(atom);
     }
@@ -75,9 +75,9 @@ export default class DirectManager {
       : this.suggestBoundaries({ error: error });
     const result: Boundaries = { lower: [], upper: [] };
     for (const parameter of parameters) {
-      if (!parameter.selected) continue;
-      result.lower.push(parameter.lower as number);
-      result.upper.push(parameter.upper as number);
+      if (!parameter.value.selected) continue;
+      result.lower.push(parameter.value.lower as number);
+      result.upper.push(parameter.value.upper as number);
     }
     return result;
   }

@@ -9,24 +9,21 @@ describe('Test parameters extraction', () => {
       type: 'coupling',
       atom: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H1', 'H2'],
-      value: 7.162,
-      selected: true,
+      value: { selected: true, prediction: 7.162 },
     });
 
     expect(parameters[1]).toStrictEqual({
       type: 'delta',
       atom: ['daz@`DBYRYmjjhb`GzP`HeT'],
       atomIDs: ['H1'],
-      value: 2.611,
-      selected: true,
+      value: { selected: true, prediction: 2.611 },
     });
 
     expect(parameters[2]).toStrictEqual({
       type: 'delta',
       atom: ['daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H2'],
-      value: 0.9500000000000001,
-      selected: true,
+      value: { selected: true, prediction: 0.9500000000000001 },
     });
   });
 
@@ -44,30 +41,36 @@ describe('Test parameters extraction', () => {
       atom: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
       type: 'coupling',
       atomIDs: ['H1', 'H2'],
-      lower: 6.962,
-      upper: 7.362,
-      value: 7.162,
-      selected: true,
+      value: {
+        prediction: 7.162,
+        lower: 6.962,
+        upper: 7.362,
+        selected: true,
+      },
     });
 
     expect(suggestedBoundaries[1]).toStrictEqual({
       atom: ['daz@`DBYRYmjjhb`GzP`HeT'],
       type: 'delta',
       atomIDs: ['H1'],
-      lower: 2.411,
-      upper: 2.811,
-      value: 2.611,
-      selected: true,
+      value: {
+        prediction: 2.611,
+        lower: 2.411,
+        upper: 2.811,
+        selected: true,
+      },
     });
 
     expect(suggestedBoundaries[2]).toStrictEqual({
       atom: ['daz@`LBYRUejj`A~dHBIU@'],
       type: 'delta',
       atomIDs: ['H2'],
-      lower: 0.75,
-      upper: 1.15,
-      value: 0.9500000000000001,
-      selected: true,
+      value: {
+        prediction: 0.9500000000000001,
+        lower: 0.75,
+        upper: 1.15,
+        selected: true,
+      },
     });
   });
 

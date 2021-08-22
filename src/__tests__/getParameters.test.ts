@@ -13,24 +13,21 @@ describe('Test parameters extraction', () => {
       type: 'coupling',
       atom: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H1', 'H2'],
-      value: 7.162,
-      selected: true,
+      value: { selected: true, prediction: 7.162 },
     });
 
     expect(parameters[1]).toStrictEqual({
       type: 'delta',
       atom: ['daz@`DBYRYmjjhb`GzP`HeT'],
       atomIDs: ['H1'],
-      value: 2.611,
-      selected: true,
+      value: { selected: true, prediction: 2.611 },
     });
 
     expect(parameters[2]).toStrictEqual({
       type: 'delta',
       atom: ['daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H2'],
-      value: 0.9500000000000001,
-      selected: true,
+      value: { selected: true, prediction: 0.9500000000000001 },
     });
   });
 
@@ -44,72 +41,63 @@ describe('Test parameters extraction', () => {
       type: 'coupling',
       atom: ['gGQHDIeIgihA~dPHeT', 'gGQHLIeIUfhRK}H`QJh'],
       atomIDs: ['H1', 'H3'],
-      value: 14.689,
-      selected: false,
+      value: { prediction: 14.689, selected: false },
     });
 
     expect(parameters[1]).toStrictEqual({
       type: 'coupling',
       atom: ['gGQHDIeIgihA~dPHeT', 'gGQHLIeIUfhRS}H`QJh'],
       atomIDs: ['H1', 'H4'],
-      value: 7.597,
-      selected: true,
+      value: { prediction: 7.597, selected: true },
     });
 
     expect(parameters[2]).toStrictEqual({
       type: 'coupling',
       atom: ['gGQHDIeIgjfR`OtbADj`', 'gGQHLIeIUjdA~dPHeT'],
       atomIDs: ['H2', 'H5'],
-      value: 7.012,
-      selected: true,
+      value: { selected: true, prediction: 7.012 },
     });
 
     expect(parameters[3]).toStrictEqual({
       type: 'coupling',
       atom: ['gGQHLIeIUfhRK}H`QJh', 'gGQHLIeIUfhRS}H`QJh'],
       atomIDs: ['H3', 'H4'],
-      value: 2.264,
-      selected: false,
+      value: { selected: false, prediction: 2.264 },
     });
 
     expect(parameters[4]).toStrictEqual({
       type: 'delta',
       atom: ['gGQHDIeIgihA~dPHeT'],
       atomIDs: ['H1'],
-      value: 6.707,
-      selected: true,
+      value: { selected: true, prediction: 6.707 },
     });
 
     expect(parameters[5]).toStrictEqual({
       type: 'delta',
       atom: ['gGQHDIeIgjfR`OtbADj`'],
       atomIDs: ['H2'],
-      value: 3.919,
-      selected: true,
+      value: { selected: true, prediction: 3.919 },
     });
 
     expect(parameters[6]).toStrictEqual({
       type: 'delta',
       atom: ['gGQHLIeIUfhRK}H`QJh'],
       atomIDs: ['H3'],
-      value: 4.793,
-      selected: false,
+      value: { selected: false, prediction: 4.793 },
     });
 
     expect(parameters[7]).toStrictEqual({
       type: 'delta',
       atom: ['gGQHLIeIUfhRS}H`QJh'],
       atomIDs: ['H4'],
-      value: 4.738,
-      selected: false,
+      value: { selected: false, prediction: 4.738 },
     });
 
     expect(parameters[8]).toStrictEqual({
       type: 'delta',
       atom: ['gGQHLIeIUjdA~dPHeT'],
       atomIDs: ['H5'],
-      value: 1.233,
-      selected: false,
+      value: { selected: false, prediction: 1.233 },
     });
   });
 });

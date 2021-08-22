@@ -1,9 +1,11 @@
 export interface Parameter {
   atom: string[];
   atomIDs: string[];
-  lower?: number;
-  upper?: number;
-  value: number;
+  value: {
+    prediction: number;
+    lower?: number;
+    upper?: number;
+    selected?: boolean;
+  };
   type: string;
-  selected?: boolean;
 }
