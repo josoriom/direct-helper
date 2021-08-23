@@ -7,7 +7,7 @@ import { Signal } from '../types/Signal';
  */
 
 export function getSignals(json: Signal[]) {
-  const predictions = json.slice();
+  const predictions = JSON.parse(JSON.stringify(json));
   for (const prediction of predictions) {
     prediction.selected =
       typeof prediction.selected === 'boolean' ? prediction.selected : true;

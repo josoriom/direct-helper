@@ -8,7 +8,7 @@ import { Signal } from '../types/Signal';
  */
 
 export function getCouplings(json: Signal[]) {
-  const predictions = json.slice();
+  const predictions = JSON.parse(JSON.stringify(json));
   const parameters = [];
   for (const prediction of predictions) {
     for (const coupling of prediction.j) {

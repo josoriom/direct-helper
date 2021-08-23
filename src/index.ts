@@ -21,10 +21,10 @@ export default class DirectManager {
   };
   public type?: string;
   public prediction: Signal[];
-  public couplings: Coupling[];
   public signals: Signal[];
+  public couplings: Coupling[];
   public constructor(prediction: Signal[]) {
-    this.prediction = prediction.slice();
+    this.prediction = JSON.parse(JSON.stringify(prediction));
     this.signals = getSignals(prediction);
     this.couplings = getCouplings(prediction);
     this.label = undefined;
@@ -53,7 +53,7 @@ export default class DirectManager {
     for (const coupling of couplings) {
       result.push({
         type: 'coupling',
-        atom: coupling.ids,
+        atoms: coupling.ids,
         atomIDs: setAtomIDs(coupling.ids, signals),
         value: { prediction: coupling.coupling, selected: coupling.selected },
       });
@@ -61,7 +61,7 @@ export default class DirectManager {
     for (const atom of signals) {
       result.push({
         type: 'delta',
-        atom: atom.diaIDs,
+        atoms: atom.diaIDs,
         atomIDs: setAtomIDs(atom.diaIDs, signals),
         value: { prediction: atom.delta, selected: atom.selected },
       });
@@ -75,7 +75,7 @@ export default class DirectManager {
     const result: Parameter[] = [];
     for (const parameter of parameters) {
       let atom: Parameter = {
-        atom: parameter.atom,
+        atoms: parameter.atoms,
         type: parameter.type,
         value: {
           prediction: parameter.value.prediction,
@@ -92,9 +92,11 @@ export default class DirectManager {
 
   public getBoundaries(parameters?: Parameter[], options: Options = {}) {
     const { error = 0.1 } = options;
+    this.signals = getSignals(this.prediction);
     parameters = parameters
       ? parameters
       : this.suggestBoundaries({ error: error });
+    this.updateSignals(parameters);
     const result: Boundaries = { lower: [], upper: [] };
     for (const parameter of parameters) {
       if (!parameter.value.selected) continue;
@@ -106,7 +108,7 @@ export default class DirectManager {
 
   public tidyUpParameters() {
     const result = this.signals.slice();
-    const couplings = this.couplings.slice().filter((item) => item.selected);
+    const couplings = this.couplings.slice();
     let counter = 0;
     return function (parameters: number[]) {
       for (const coupling of couplings) {
@@ -128,6 +130,29 @@ export default class DirectManager {
       counter = 0;
       return result;
     };
+  }
+
+  public updateSignals(parameters?: Parameter[]) {
+    if (parameters === undefined) return;
+    for (const parameter of parameters) {
+      const atoms = parameter.atoms;
+      for (const atom of atoms) {
+        const deltaIndex: number = this.signals.findIndex(
+          (item: { diaIDs: string[] }) => item.diaIDs[0] === atom,
+        );
+        if (parameter.type === 'delta') {
+          this.signals[deltaIndex].selected = parameter.value.selected;
+        } else if (parameter.type === 'coupling') {
+          const jId = atoms.filter((item) => item !== atom)[0];
+          const jIndex = this.signals[deltaIndex].j.findIndex(
+            (item) => item.diaID === jId,
+          );
+          this.signals[deltaIndex].j[jIndex].selected =
+            parameter.value.selected;
+        }
+      }
+    }
+    this.couplings = getCouplings(this.signals);
   }
 }
 

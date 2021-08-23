@@ -4,8 +4,55 @@ import ethylAcetoacetate from '../../predictions/ethylAcetoacetate.json';
 import ethylVinylEther from '../../predictions/ethylVinylEther.json';
 import jCouplingEthylVinylEther from '../../predictions/jcoupling-ethyl-vinyl-ether.json';
 import triethylamine from '../../predictions/triethylamine.json';
+import uracil from '../../predictions/uracil.json';
 
 describe('Test parameters extraction', () => {
+  it('testing the uracil without coupling', () => {
+    const directManager = new DirectManager(uracil);
+    const configurationFunction = directManager.tidyUpParameters();
+    const predictionFile = configurationFunction([1, 2]);
+    expect(predictionFile).toStrictEqual([
+      {
+        atomIDs: ['9'],
+        diaIDs: ['dieD`DyaBYRYVZzffX@_iB@bUP'],
+        nbAtoms: 1,
+        delta: 1,
+        atomLabel: 'H',
+        j: [
+          {
+            assignment: ['8'],
+            diaID: 'dieD`JXaBYRYgvzejX@_iB@bUP',
+            coupling: 10.804,
+            multiplicity: 'd',
+            distance: 3,
+            selected: false,
+          },
+        ],
+        selected: true,
+        multiplicity: 'd',
+      },
+      {
+        atomIDs: ['8'],
+        diaIDs: ['dieD`JXaBYRYgvzejX@_iB@bUP'],
+        nbAtoms: 1,
+        delta: 2,
+        atomLabel: 'H',
+        j: [
+          {
+            assignment: ['9'],
+            diaID: 'dieD`DyaBYRYVZzffX@_iB@bUP',
+            coupling: 10.804,
+            multiplicity: 'd',
+            distance: 3,
+            selected: false,
+          },
+        ],
+        selected: true,
+        multiplicity: 'd',
+      },
+    ]);
+  });
+
   it('Set parameters for triethylamine prediction file', () => {
     const directManager = new DirectManager(triethylamine);
     const configurationFunction = directManager.tidyUpParameters();

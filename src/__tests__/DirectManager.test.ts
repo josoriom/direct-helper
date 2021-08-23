@@ -7,21 +7,21 @@ describe('Test parameters extraction', () => {
     const parameters = directManager.getParameters();
     expect(parameters[0]).toStrictEqual({
       type: 'coupling',
-      atom: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
+      atoms: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H1', 'H2'],
       value: { selected: true, prediction: 7.162 },
     });
 
     expect(parameters[1]).toStrictEqual({
       type: 'delta',
-      atom: ['daz@`DBYRYmjjhb`GzP`HeT'],
+      atoms: ['daz@`DBYRYmjjhb`GzP`HeT'],
       atomIDs: ['H1'],
       value: { selected: true, prediction: 2.611 },
     });
 
     expect(parameters[2]).toStrictEqual({
       type: 'delta',
-      atom: ['daz@`LBYRUejj`A~dHBIU@'],
+      atoms: ['daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H2'],
       value: { selected: true, prediction: 0.9500000000000001 },
     });
@@ -38,7 +38,7 @@ describe('Test parameters extraction', () => {
   it('Should build boundaries', () => {
     const suggestedBoundaries = directManager.suggestBoundaries({ error: 0.2 });
     expect(suggestedBoundaries[0]).toStrictEqual({
-      atom: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
+      atoms: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
       type: 'coupling',
       atomIDs: ['H1', 'H2'],
       value: {
@@ -50,7 +50,7 @@ describe('Test parameters extraction', () => {
     });
 
     expect(suggestedBoundaries[1]).toStrictEqual({
-      atom: ['daz@`DBYRYmjjhb`GzP`HeT'],
+      atoms: ['daz@`DBYRYmjjhb`GzP`HeT'],
       type: 'delta',
       atomIDs: ['H1'],
       value: {
@@ -62,7 +62,7 @@ describe('Test parameters extraction', () => {
     });
 
     expect(suggestedBoundaries[2]).toStrictEqual({
-      atom: ['daz@`LBYRUejj`A~dHBIU@'],
+      atoms: ['daz@`LBYRUejj`A~dHBIU@'],
       type: 'delta',
       atomIDs: ['H2'],
       value: {
