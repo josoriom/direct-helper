@@ -42,17 +42,17 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.1",
+    "@types/jest": "^27.0.2",
     "cheminfo-build": "^1.1.11",
-    "eslint": "^7.32.0",
-    "eslint-config-cheminfo-typescript": "^9.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-cheminfo-typescript": "^10.1.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jest": "^25.2.2",
-    "jest": "^27.0.6",
-    "prettier": "^2.3.2",
+    "jest": "^27.3.0",
+    "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
-    "ts-jest": "^27.0.5",
-    "typescript": "^4.3.5"
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4"
   },
   "dependencies": {
     "integral-transforms": "^0.0.0"
