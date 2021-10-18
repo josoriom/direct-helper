@@ -37,10 +37,6 @@
     "url": "https://github.com/josoriom/direct-manager/issues"
   },
   "homepage": "https://github.com/josoriom/direct-manager#readme",
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "cheminfo-build": "^1.1.11",
