@@ -1,3 +1,5 @@
+import { getTransform } from 'integral-transforms';
+
 import { Boundaries } from './types/Boundaries';
 import { Coupling } from './types/Coupling';
 import { Molecule } from './types/Molecule';
@@ -23,10 +25,12 @@ export default class DirectManager {
   public prediction: Signal[];
   public signals: Signal[];
   public couplings: Coupling[];
+  public parameters: Parameter[];
   public constructor(prediction: Signal[]) {
     this.prediction = JSON.parse(JSON.stringify(prediction));
     this.signals = getSignals(prediction);
     this.couplings = getCouplings(prediction);
+    this.parameters = [];
     this.label = undefined;
     this.smiles = undefined;
     this.mf = undefined;
@@ -36,6 +40,18 @@ export default class DirectManager {
 
   public getSignals() {
     return this.signals;
+  }
+
+  public getDummyTarget(options: ITOptions = {}) {
+    const { kernelLength = 7 } = options;
+    const spectrum = this.spectrum?.y;
+    const y = getTransform(spectrum as number[], {
+      kernelLength: kernelLength,
+    });
+    return {
+      x: this.spectrum?.x as number[],
+      y: y,
+    };
   }
 
   public loadMolecule(molecule: Molecule) {
@@ -49,27 +65,36 @@ export default class DirectManager {
   public getParameters() {
     const signals = this.signals.slice();
     const couplings = this.couplings.slice();
-    let result: Parameter[] = [];
+    let parameters: Parameter[] = [];
     for (const coupling of couplings) {
-      result.push({
+      parameters.push({
         type: 'coupling',
         atoms: coupling.ids,
         atomIDs: setAtomIDs(coupling.ids, signals),
-        value: { prediction: coupling.coupling, selected: coupling.selected },
+        value: {
+          prediction: coupling.coupling,
+          assessment: coupling.coupling,
+          selected: coupling.selected,
+        },
       });
     }
     for (const atom of signals) {
-      result.push({
+      parameters.push({
         type: 'delta',
         atoms: atom.diaIDs,
         atomIDs: setAtomIDs(atom.diaIDs, signals),
-        value: { prediction: atom.delta, selected: atom.selected },
+        value: {
+          prediction: atom.delta,
+          assessment: atom.delta,
+          selected: atom.selected,
+        },
       });
     }
-    return result;
+    this.parameters = parameters;
+    return parameters;
   }
 
-  public suggestBoundaries(options: Options = {}) {
+  public suggestBoundaries(options: ErrorOption = {}) {
     const parameters = this.getParameters();
     const { error = 0.1 } = options;
     const result: Parameter[] = [];
@@ -79,6 +104,7 @@ export default class DirectManager {
         type: parameter.type,
         value: {
           prediction: parameter.value.prediction,
+          assessment: parameter.value.prediction,
           lower: roundTo(parameter.value.prediction - error),
           upper: roundTo(parameter.value.prediction + error),
           selected: parameter.value.selected,
@@ -90,12 +116,13 @@ export default class DirectManager {
     return result;
   }
 
-  public getBoundaries(parameters?: Parameter[], options: Options = {}) {
+  public getBoundaries(parameters?: Parameter[], options: ErrorOption = {}) {
     const { error = 0.1 } = options;
     this.signals = getSignals(this.prediction);
     parameters = parameters
       ? parameters
       : this.suggestBoundaries({ error: error });
+    this.parameters = parameters;
     this.updateSignals(parameters);
     const result: Boundaries = { lower: [], upper: [] };
     for (const parameter of parameters) {
@@ -110,15 +137,17 @@ export default class DirectManager {
     const result = this.signals.slice();
     const couplings = this.couplings.slice();
     let counter = 0;
-    return function (parameters: number[]) {
+    return (parameters: number[]) => {
       for (const coupling of couplings) {
         if (!coupling.selected) continue;
-        coupling.coupling = parameters[counter++];
+        coupling.coupling = parameters[counter];
+        counter++;
       }
       for (const atom of result) {
         const relatedAtoms = findCoupling(atom.diaIDs[0], couplings);
         if (atom.selected) {
-          atom.delta = parameters[counter++];
+          atom.delta = parameters[counter];
+          counter++;
         }
 
         for (const jcoupling of atom.j) {
@@ -136,24 +165,71 @@ export default class DirectManager {
     if (parameters === undefined) return;
     for (const parameter of parameters) {
       const atoms = parameter.atoms;
-      for (const atom of atoms) {
-        const deltaIndex: number = this.signals.findIndex(
-          (item: { diaIDs: string[] }) => item.diaIDs[0] === atom,
+      const deltaIndex: number = this.signals.findIndex(
+        (item: { diaIDs: string[] }) => item.diaIDs[0] === atoms[0],
+      );
+      if (parameter.type === 'delta') {
+        this.signals[deltaIndex].selected = parameter.value.selected;
+        this.signals[deltaIndex].delta = parameter.value.assessment;
+      } else if (parameter.type === 'coupling') {
+        const jOneIndex = getCouplingIndex(
+          atoms[1],
+          parameter.value.prediction,
+          this.prediction[deltaIndex].j,
         );
-        if (parameter.type === 'delta') {
-          this.signals[deltaIndex].selected = parameter.value.selected;
-        } else if (parameter.type === 'coupling') {
-          const jId = atoms.filter((item) => item !== atom)[0];
-          const jIndex = this.signals[deltaIndex].j.findIndex(
-            (item) => item.diaID === jId,
-          );
-          this.signals[deltaIndex].j[jIndex].selected =
+        const delta2Index: number = this.signals.findIndex(
+          (item: { diaIDs: string[] }) => item.diaIDs[0] === atoms[1],
+        );
+        const jTwoIndex = getCouplingIndex(
+          atoms[0],
+          parameter.value.prediction,
+          this.prediction[delta2Index].j,
+        );
+        for (const index of jOneIndex) {
+          this.signals[deltaIndex].j[index].selected = parameter.value.selected;
+          this.signals[deltaIndex].j[index].coupling =
+            parameter.value.assessment;
+        }
+
+        for (const index of jTwoIndex) {
+          this.signals[delta2Index].j[index].selected =
             parameter.value.selected;
+          this.signals[delta2Index].j[index].coupling =
+            parameter.value.assessment;
         }
       }
     }
     this.couplings = getCouplings(this.signals);
   }
+}
+
+function getCouplingIndex(
+  id: string,
+  value: number,
+  couplings: {
+    assignment: string[];
+    coupling: number;
+    diaID: string;
+    distance: number;
+    multiplicity: string;
+    selected?: boolean;
+  }[],
+): number[] {
+  let counter = 0;
+  let couplingId = [];
+  for (let coupling of couplings) {
+    if (coupling.diaID === id) {
+      if (coupling.coupling === value) {
+        couplingId.push(counter);
+        continue;
+      }
+      if (coupling.coupling.toPrecision(2) === value.toPrecision(2)) {
+        couplingId.push(counter);
+      }
+    }
+    counter++;
+  }
+  return couplingId;
 }
 
 function findCoupling(id: string, couplings: Coupling[]) {
@@ -179,6 +255,20 @@ function setAtomIDs(atomIDs: string[], prediction: Signal[]) {
 /**
  * @default options.error [0.001]
  */
-interface Options {
+interface ErrorOption {
   error?: number;
+}
+
+/**
+ * Integral transforms options
+ */
+interface ITOptions {
+  shape?: string;
+  kernelLength?: number;
+  nbPoints?: number;
+  shapeOptions?: {
+    width: number;
+    height: number;
+    center: number;
+  };
 }

@@ -9,21 +9,25 @@ describe('Test parameters extraction', () => {
       type: 'coupling',
       atoms: ['daz@`DBYRYmjjhb`GzP`HeT', 'daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H1', 'H2'],
-      value: { selected: true, prediction: 7.162 },
+      value: { selected: true, prediction: 7.162, assessment: 7.162 },
     });
 
     expect(parameters[1]).toStrictEqual({
       type: 'delta',
       atoms: ['daz@`DBYRYmjjhb`GzP`HeT'],
       atomIDs: ['H1'],
-      value: { selected: true, prediction: 2.611 },
+      value: { selected: true, prediction: 2.611, assessment: 2.611 },
     });
 
     expect(parameters[2]).toStrictEqual({
       type: 'delta',
       atoms: ['daz@`LBYRUejj`A~dHBIU@'],
       atomIDs: ['H2'],
-      value: { selected: true, prediction: 0.9500000000000001 },
+      value: {
+        selected: true,
+        prediction: 0.9500000000000001,
+        assessment: 0.9500000000000001,
+      },
     });
   });
 
@@ -43,6 +47,7 @@ describe('Test parameters extraction', () => {
       atomIDs: ['H1', 'H2'],
       value: {
         prediction: 7.162,
+        assessment: 7.162,
         lower: 6.962,
         upper: 7.362,
         selected: true,
@@ -55,6 +60,7 @@ describe('Test parameters extraction', () => {
       atomIDs: ['H1'],
       value: {
         prediction: 2.611,
+        assessment: 2.611,
         lower: 2.411,
         upper: 2.811,
         selected: true,
@@ -67,6 +73,7 @@ describe('Test parameters extraction', () => {
       atomIDs: ['H2'],
       value: {
         prediction: 0.9500000000000001,
+        assessment: 0.9500000000000001,
         lower: 0.75,
         upper: 1.15,
         selected: true,

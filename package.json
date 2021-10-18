@@ -45,11 +45,16 @@
     "@types/jest": "^27.0.1",
     "cheminfo-build": "^1.1.11",
     "eslint": "^7.32.0",
-    "eslint-config-cheminfo-typescript": "^8.0.9",
+    "eslint-config-cheminfo-typescript": "^9.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.2.2",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.5",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "integral-transforms": "^0.0.0"
   }
 }
