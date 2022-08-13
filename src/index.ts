@@ -46,11 +46,11 @@ export default class DirectManager {
     const { kernelLength = 7 } = options;
     const spectrum = this.spectrum?.y;
     const y = getTransform(spectrum as number[], {
-      kernelLength: kernelLength,
+      kernelLength,
     });
     return {
       x: this.spectrum?.x as number[],
-      y: y,
+      y,
     };
   }
 
@@ -119,9 +119,7 @@ export default class DirectManager {
   public getBoundaries(parameters?: Parameter[], options: ErrorOption = {}) {
     const { error = 0.1 } = options;
     this.signals = getSignals(this.prediction);
-    parameters = parameters
-      ? parameters
-      : this.suggestBoundaries({ error: error });
+    parameters = parameters ? parameters : this.suggestBoundaries({ error });
     this.parameters = parameters;
     this.updateSignals(parameters);
     const result: Boundaries = { lower: [], upper: [] };
