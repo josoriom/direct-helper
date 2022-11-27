@@ -116,14 +116,27 @@ export default class DirectManager {
     return result;
   }
 
-  public getBoundaries(parameters?: Parameter[], options: ErrorOption = {}) {
+  public getBoundaries(
+    parameters?: Parameter[] | any[],
+    options: ErrorOption = {},
+  ) {
     const { error = 0.1 } = options;
     this.signals = getSignals(this.prediction);
-    parameters = parameters ? parameters : this.suggestBoundaries({ error });
-    this.parameters = parameters;
-    this.updateSignals(parameters);
+    if (parameters) {
+      const currentParameters = this.getParameters();
+      for (let i = 0; i < parameters.length; i++) {
+        currentParameters[i].value.assessment = parameters[i].assessment;
+        currentParameters[i].value.selected = parameters[i].selected;
+        currentParameters[i].value.lower = parameters[i].lower;
+        currentParameters[i].value.upper = parameters[i].upper;
+      }
+      this.parameters = currentParameters;
+    } else {
+      this.parameters = this.suggestBoundaries({ error });
+    }
+    this.updateSignals(this.parameters);
     const result: Boundaries = { lower: [], upper: [] };
-    for (const parameter of parameters) {
+    for (const parameter of this.parameters) {
       if (!parameter.value.selected) continue;
       result.lower.push(parameter.value.lower as number);
       result.upper.push(parameter.value.upper as number);
