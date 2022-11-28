@@ -1,6 +1,6 @@
 {
   "name": "direct-manager",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Manager for direct optimization",
   "main": "./lib/index.js",
   "module": "./lib-esm/index.js",
@@ -56,5 +56,8 @@
   },
   "dependencies": {
     "integral-transforms": "^0.0.0"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }
