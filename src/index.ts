@@ -65,7 +65,7 @@ export default class DirectManager {
   public getParameters() {
     const signals = this.signals.slice();
     const couplings = this.couplings.slice();
-    let parameters: Parameter[] = [];
+    const parameters: Parameter[] = [];
     for (const coupling of couplings) {
       parameters.push({
         type: 'coupling',
@@ -99,7 +99,7 @@ export default class DirectManager {
     const { error = 0.1 } = options;
     const result: Parameter[] = [];
     for (const parameter of parameters) {
-      let atom: Parameter = {
+      const atom: Parameter = {
         atoms: parameter.atoms,
         type: parameter.type,
         value: {
@@ -217,18 +217,18 @@ export default class DirectManager {
 function getCouplingIndex(
   id: string,
   value: number,
-  couplings: {
+  couplings: Array<{
     assignment: string[];
     coupling: number;
     diaID: string;
     distance: number;
     multiplicity: string;
     selected?: boolean;
-  }[],
+  }>,
 ): number[] {
   let counter = 0;
-  let couplingId = [];
-  for (let coupling of couplings) {
+  const couplingId = [];
+  for (const coupling of couplings) {
     if (coupling.diaID === id) {
       if (coupling.coupling === value) {
         couplingId.push(counter);
@@ -245,8 +245,8 @@ function getCouplingIndex(
 
 function findCoupling(id: string, couplings: Coupling[]) {
   const result: Coupling[] = [];
-  for (let coupling of couplings) {
-    for (let value of coupling.ids) {
+  for (const coupling of couplings) {
+    for (const value of coupling.ids) {
       if (value === id) result.push(coupling);
     }
   }
