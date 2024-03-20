@@ -4,14 +4,14 @@ export interface Signal {
   nbAtoms: number;
   delta: number;
   atomLabel: string;
-  j: {
+  j: Array<{
     assignment: string[];
     diaID: string;
     coupling: number;
     multiplicity: string;
     distance: number;
     selected?: boolean;
-  }[];
+  }>;
   multiplicity: string;
   selected?: boolean;
 }
