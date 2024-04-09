@@ -147,17 +147,18 @@ export default class DirectManager {
   public tidyUpParameters() {
     const result = this.signals.slice();
     const couplings = this.couplings.slice();
+    const parameters = this.parameters.slice();
     let counter = 0;
-    return (parameters: number[]) => {
+    return (values: number[]) => {
       for (const coupling of couplings) {
         if (!coupling.selected) continue;
-        coupling.coupling = parameters[counter];
+        coupling.coupling = values[counter];
         counter++;
       }
       for (const atom of result) {
         const relatedAtoms = findCoupling(atom.diaIDs[0], couplings);
         if (atom.selected) {
-          atom.delta = parameters[counter];
+          atom.delta = values[getDeltaIndex(atom.diaIDs[0], parameters)];
           counter++;
         }
 
@@ -246,11 +247,21 @@ function getCouplingIndex(
 function findCoupling(id: string, couplings: Coupling[]) {
   const result: Coupling[] = [];
   for (const coupling of couplings) {
-    for (const value of coupling.ids) {
-      if (value === id) result.push(coupling);
+    if (coupling.ids.includes(id)) {
+      result.push(coupling);
     }
   }
   return result;
+}
+
+function getDeltaIndex(id: string, parameters: Parameter[]): number {
+  for (let i = 0; i < parameters.length; i++) {
+    const item = parameters[i];
+    if (item.atoms.length === 1 && item.atoms[0] === id) {
+      return i;
+    }
+  }
+  throw new Error(`Delta index not found for ID${id}`);
 }
 
 function setAtomIDs(atomIDs: string[], prediction: Signal[]) {
