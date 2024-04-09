@@ -147,7 +147,7 @@ export default class DirectManager {
   public tidyUpParameters() {
     const result = this.signals.slice();
     const couplings = this.couplings.slice();
-    const parameters = this.parameters.slice();
+    const parameters = this.getParameters();
     let counter = 0;
     return (values: number[]) => {
       for (const coupling of couplings) {
@@ -161,7 +161,6 @@ export default class DirectManager {
           atom.delta = values[getDeltaIndex(atom.diaIDs[0], parameters)];
           counter++;
         }
-
         for (const jcoupling of atom.j) {
           const coupling = findCoupling(jcoupling.diaID, relatedAtoms);
           jcoupling.coupling =
@@ -169,7 +168,7 @@ export default class DirectManager {
         }
       }
       counter = 0;
-      return result;
+      return checkSignals(result);
     };
   }
 
@@ -255,10 +254,12 @@ function findCoupling(id: string, couplings: Coupling[]) {
 }
 
 function getDeltaIndex(id: string, parameters: Parameter[]): number {
+  let j = 0;
   for (let i = 0; i < parameters.length; i++) {
     const item = parameters[i];
+    if (!item.value.selected) j++;
     if (item.atoms.length === 1 && item.atoms[0] === id) {
-      return i;
+      return i - j;
     }
   }
   throw new Error(`Delta index not found for ID${id}`);
@@ -293,4 +294,20 @@ interface ITOptions {
     height: number;
     center: number;
   };
+}
+
+function checkSignals(signals: Signal[]) {
+  for (const signal of signals) {
+    if (signal.delta === undefined) {
+      throw Error(`Delta with id: ${signal.atomIDs[0]} is undefined`);
+    }
+    for (const j of signal.j) {
+      if (j.coupling === undefined) {
+        throw Error(
+          `Coupling of signal with id: ${signal.atomIDs[0]} is undefined`,
+        );
+      }
+    }
+  }
+  return signals;
 }
