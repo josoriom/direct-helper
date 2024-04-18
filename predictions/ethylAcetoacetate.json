@@ -10,7 +10,7 @@
         "nbAtoms": 2,
         "delta": 3.583,
         "atomLabel": "H",
-        "j": [],
+        "js": [],
         "multiplicity": "s",
         "selected": true
     },
@@ -25,7 +25,7 @@
         "nbAtoms": 2,
         "delta": 4.11,
         "atomLabel": "H",
-        "j": [
+        "js": [
             {
                 "assignment": [
                     "9",
@@ -54,7 +54,7 @@
         "nbAtoms": 3,
         "delta": 2.118,
         "atomLabel": "H",
-        "j": [],
+        "js": [],
         "multiplicity": "s",
         "selected": true
     },
@@ -70,7 +70,7 @@
         "nbAtoms": 3,
         "delta": 1.148,
         "atomLabel": "H",
-        "j": [
+        "js": [
             {
                 "assignment": [
                     "12",

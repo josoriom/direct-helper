@@ -10,7 +10,7 @@ describe('Setting up signals to perform optimization', () => {
       nbAtoms: 6,
       delta: 2.611,
       atomLabel: 'H',
-      j: [
+      js: [
         {
           assignment: ['7', '8', '9'],
           diaID: 'daz@`LBYRUejj`A~dHBIU@',
@@ -32,7 +32,7 @@ describe('Setting up signals to perform optimization', () => {
       nbAtoms: 9,
       delta: 0.9500000000000001,
       atomLabel: 'H',
-      j: [
+      js: [
         {
           assignment: ['10', '11'],
           diaID: 'daz@`DBYRYmjjhb`GzP`HeT',

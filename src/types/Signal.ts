@@ -4,7 +4,7 @@ export interface Signal {
   nbAtoms: number;
   delta: number;
   atomLabel: string;
-  j: Array<{
+  js: Array<{
     assignment: string[];
     diaID: string;
     coupling: number;

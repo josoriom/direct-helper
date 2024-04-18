@@ -11,7 +11,7 @@ export function getCouplings(json: Signal[]) {
   const predictions = JSON.parse(JSON.stringify(json));
   const parameters = [];
   for (const prediction of predictions) {
-    for (const coupling of prediction.j) {
+    for (const coupling of prediction.js) {
       const item: Coupling = { ids: [], coupling: 0, selected: true };
       item.ids = JSON.parse(JSON.stringify(prediction.diaIDs));
       item.ids.push(coupling.diaID);

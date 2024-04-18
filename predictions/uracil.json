@@ -1,13 +1,19 @@
 [
   {
-    "atomIDs": ["9"],
-    "diaIDs": ["dieD`DyaBYRYVZzffX@_iB@bUP"],
+    "atomIDs": [
+      "9"
+    ],
+    "diaIDs": [
+      "dieD`DyaBYRYVZzffX@_iB@bUP"
+    ],
     "nbAtoms": 1,
     "delta": 7.564,
     "atomLabel": "H",
-    "j": [
+    "js": [
       {
-        "assignment": ["8"],
+        "assignment": [
+          "8"
+        ],
         "diaID": "dieD`JXaBYRYgvzejX@_iB@bUP",
         "coupling": 10.804,
         "multiplicity": "d",
@@ -19,14 +25,20 @@
     "multiplicity": "d"
   },
   {
-    "atomIDs": ["8"],
-    "diaIDs": ["dieD`JXaBYRYgvzejX@_iB@bUP"],
+    "atomIDs": [
+      "8"
+    ],
+    "diaIDs": [
+      "dieD`JXaBYRYgvzejX@_iB@bUP"
+    ],
     "nbAtoms": 1,
     "delta": 5.821,
     "atomLabel": "H",
-    "j": [
+    "js": [
       {
-        "assignment": ["9"],
+        "assignment": [
+          "9"
+        ],
         "diaID": "dieD`DyaBYRYVZzffX@_iB@bUP",
         "coupling": 10.804,
         "multiplicity": "d",

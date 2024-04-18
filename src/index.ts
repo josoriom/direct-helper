@@ -161,7 +161,7 @@ export default class DirectManager {
           atom.delta = values[getDeltaIndex(atom.diaIDs[0], parameters)];
           counter++;
         }
-        for (const jcoupling of atom.j) {
+        for (const jcoupling of atom.js) {
           const coupling = findCoupling(jcoupling.diaID, relatedAtoms);
           jcoupling.coupling =
             coupling.length === 0 ? jcoupling.coupling : coupling[0].coupling;
@@ -186,7 +186,7 @@ export default class DirectManager {
         const jOneIndex = getCouplingIndex(
           atoms[1],
           parameter.value.prediction,
-          this.prediction[deltaIndex].j,
+          this.prediction[deltaIndex].js,
         );
         const delta2Index: number = this.signals.findIndex(
           (item: { diaIDs: string[] }) => item.diaIDs[0] === atoms[1],
@@ -194,18 +194,19 @@ export default class DirectManager {
         const jTwoIndex = getCouplingIndex(
           atoms[0],
           parameter.value.prediction,
-          this.prediction[delta2Index].j,
+          this.prediction[delta2Index].js,
         );
         for (const index of jOneIndex) {
-          this.signals[deltaIndex].j[index].selected = parameter.value.selected;
-          this.signals[deltaIndex].j[index].coupling =
+          this.signals[deltaIndex].js[index].selected =
+            parameter.value.selected;
+          this.signals[deltaIndex].js[index].coupling =
             parameter.value.assessment;
         }
 
         for (const index of jTwoIndex) {
-          this.signals[delta2Index].j[index].selected =
+          this.signals[delta2Index].js[index].selected =
             parameter.value.selected;
-          this.signals[delta2Index].j[index].coupling =
+          this.signals[delta2Index].js[index].coupling =
             parameter.value.assessment;
         }
       }
@@ -301,7 +302,7 @@ function checkSignals(signals: Signal[]) {
     if (signal.delta === undefined) {
       throw Error(`Delta with id: ${signal.atomIDs[0]} is undefined`);
     }
-    for (const j of signal.j) {
+    for (const j of signal.js) {
       if (j.coupling === undefined) {
         throw Error(
           `Coupling of signal with id: ${signal.atomIDs[0]} is undefined`,

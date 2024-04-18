@@ -11,7 +11,7 @@ export function getSignals(json: Signal[]) {
   for (const prediction of predictions) {
     prediction.selected =
       typeof prediction.selected === 'boolean' ? prediction.selected : true;
-    for (const coupling of prediction.j) {
+    for (const coupling of prediction.js) {
       coupling.selected =
         typeof coupling.selected === 'boolean' ? coupling.selected : true;
     }

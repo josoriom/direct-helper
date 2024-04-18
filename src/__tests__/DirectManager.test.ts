@@ -91,7 +91,7 @@ describe('Test parameters extraction', () => {
       nbAtoms: 6,
       delta: 2,
       atomLabel: 'H',
-      j: [
+      js: [
         {
           assignment: ['7', '8', '9'],
           diaID: 'daz@`LBYRUejj`A~dHBIU@',
@@ -111,7 +111,7 @@ describe('Test parameters extraction', () => {
       nbAtoms: 9,
       delta: 3,
       atomLabel: 'H',
-      j: [
+      js: [
         {
           assignment: ['10', '11'],
           diaID: 'daz@`DBYRYmjjhb`GzP`HeT',

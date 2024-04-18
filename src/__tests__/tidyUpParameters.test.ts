@@ -18,7 +18,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 1,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['8'],
             diaID: 'dieD`JXaBYRYgvzejX@_iB@bUP',
@@ -37,7 +37,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 2,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['9'],
             diaID: 'dieD`DyaBYRYVZzffX@_iB@bUP',
@@ -64,7 +64,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 6,
         delta: 2.511,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['7', '8', '9'],
             diaID: 'daz@`LBYRUejj`A~dHBIU@',
@@ -83,7 +83,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 9,
         delta: 0.85,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['10', '11'],
             diaID: 'daz@`DBYRYmjjhb`GzP`HeT',
@@ -110,7 +110,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 2,
         delta: 1,
         atomLabel: 'H',
-        j: [],
+        js: [],
         multiplicity: 's',
         selected: true,
       },
@@ -120,7 +120,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 2,
         delta: 2,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['9', '10', '11'],
             diaID: 'dedL`LhPfTeVvjff@GzP`HeT',
@@ -139,7 +139,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 3,
         delta: 3,
         atomLabel: 'H',
-        j: [],
+        js: [],
         multiplicity: 's',
         selected: true,
       },
@@ -149,7 +149,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 3,
         delta: 4,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['12', '13'],
             diaID: 'dedL`DhPfTf^vjffbJ@_iB@bUP',
@@ -176,7 +176,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 6.707,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['12'],
             diaID: 'gGQHLIeIUfhRK}H`QJh',
@@ -203,7 +203,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 2,
         delta: 3.919,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['5', '6', '7'],
             diaID: 'gGQHLIeIUjdA~dPHeT',
@@ -222,7 +222,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 4.793,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['10'],
             diaID: 'gGQHDIeIgihA~dPHeT',
@@ -249,7 +249,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 4.738,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['10'],
             diaID: 'gGQHDIeIgihA~dPHeT',
@@ -276,7 +276,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 3,
         delta: 1.233,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['8', '9'],
             diaID: 'gGQHDIeIgjfR`OtbADj`',
@@ -303,7 +303,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 1,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['12'],
             diaID: 'gGQHLIeIUfhRK}H`QJh',
@@ -330,7 +330,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 2,
         delta: 2,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['5', '6', '7'],
             diaID: 'gGQHLIeIUjdA~dPHeT',
@@ -349,7 +349,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 3,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['10'],
             diaID: 'gGQHDIeIgihA~dPHeT',
@@ -376,7 +376,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 4,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['10'],
             diaID: 'gGQHDIeIgihA~dPHeT',
@@ -403,7 +403,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 3,
         delta: 5,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['8', '9'],
             diaID: 'gGQHDIeIgjfR`OtbADj`',
@@ -430,7 +430,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 3,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['12'],
             diaID: 'gGQHLIeIUfhRK}H`QJh',
@@ -457,7 +457,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 2,
         delta: 4,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['5', '6', '7'],
             diaID: 'gGQHLIeIUjdA~dPHeT',
@@ -476,7 +476,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 4.793,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['10'],
             diaID: 'gGQHDIeIgihA~dPHeT',
@@ -503,7 +503,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 1,
         delta: 4.738,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['10'],
             diaID: 'gGQHDIeIgihA~dPHeT',
@@ -530,7 +530,7 @@ describe('Test parameters extraction', () => {
         nbAtoms: 3,
         delta: 1.233,
         atomLabel: 'H',
-        j: [
+        js: [
           {
             assignment: ['8', '9'],
             diaID: 'gGQHDIeIgjfR`OtbADj`',
