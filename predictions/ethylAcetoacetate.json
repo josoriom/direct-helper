@@ -32,7 +32,9 @@
                     "10",
                     "11"
                 ],
-                "diaID": "dedL`LhPfTeVvjff@GzP`HeT",
+                "diaIDs": [
+                    "dedL`LhPfTeVvjff@GzP`HeT"
+                ],
                 "coupling": 7.115,
                 "multiplicity": "q",
                 "distance": 3,
@@ -76,7 +78,9 @@
                     "12",
                     "13"
                 ],
-                "diaID": "dedL`DhPfTf^vjffbJ@_iB@bUP",
+                "diaIDs": [
+                    "dedL`DhPfTf^vjffbJ@_iB@bUP"
+                ],
                 "coupling": 7.115,
                 "multiplicity": "t",
                 "distance": 3,

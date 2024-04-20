@@ -162,7 +162,7 @@ export default class DirectManager {
           counter++;
         }
         for (const jcoupling of atom.js) {
-          const coupling = findCoupling(jcoupling.diaID, relatedAtoms);
+          const coupling = findCoupling(jcoupling.diaIDs[0], relatedAtoms);
           jcoupling.coupling =
             coupling.length === 0 ? jcoupling.coupling : coupling[0].coupling;
         }
@@ -177,7 +177,8 @@ export default class DirectManager {
     for (const parameter of parameters) {
       const atoms = parameter.atoms;
       const deltaIndex: number = this.signals.findIndex(
-        (item: { diaIDs: string[] }) => item.diaIDs[0] === atoms[0],
+        (item: { diaIDs: Array<string | number> }) =>
+          item.diaIDs[0] === atoms[0],
       );
       if (parameter.type === 'delta') {
         this.signals[deltaIndex].selected = parameter.value.selected;
@@ -189,7 +190,8 @@ export default class DirectManager {
           this.prediction[deltaIndex].js,
         );
         const delta2Index: number = this.signals.findIndex(
-          (item: { diaIDs: string[] }) => item.diaIDs[0] === atoms[1],
+          (item: { diaIDs: Array<string | number> }) =>
+            item.diaIDs[0] === atoms[1],
         );
         const jTwoIndex = getCouplingIndex(
           atoms[0],
@@ -216,12 +218,12 @@ export default class DirectManager {
 }
 
 function getCouplingIndex(
-  id: string,
+  id: string | number,
   value: number,
   couplings: Array<{
-    assignment: string[];
+    assignment?: string[];
     coupling: number;
-    diaID: string;
+    diaIDs: Array<string | number>;
     distance: number;
     multiplicity: string;
     selected?: boolean;
@@ -230,7 +232,7 @@ function getCouplingIndex(
   let counter = 0;
   const couplingId = [];
   for (const coupling of couplings) {
-    if (coupling.diaID === id) {
+    if (coupling.diaIDs[0] === id) {
       if (coupling.coupling === value) {
         couplingId.push(counter);
         continue;
@@ -244,7 +246,7 @@ function getCouplingIndex(
   return couplingId;
 }
 
-function findCoupling(id: string, couplings: Coupling[]) {
+function findCoupling(id: string | number, couplings: Coupling[]) {
   const result: Coupling[] = [];
   for (const coupling of couplings) {
     if (coupling.ids.includes(id)) {
@@ -254,7 +256,7 @@ function findCoupling(id: string, couplings: Coupling[]) {
   return result;
 }
 
-function getDeltaIndex(id: string, parameters: Parameter[]): number {
+function getDeltaIndex(id: string | number, parameters: Parameter[]): number {
   let j = 0;
   for (let i = 0; i < parameters.length; i++) {
     const item = parameters[i];
@@ -266,7 +268,7 @@ function getDeltaIndex(id: string, parameters: Parameter[]): number {
   throw new Error(`Delta index not found for ID${id}`);
 }
 
-function setAtomIDs(atomIDs: string[], prediction: Signal[]) {
+function setAtomIDs(atomIDs: Array<string | number>, prediction: Signal[]) {
   const IDs = prediction.map((item) => item.diaIDs[0]);
   const result: string[] = [];
   for (const atomID of atomIDs) {

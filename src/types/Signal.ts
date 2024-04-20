@@ -1,12 +1,12 @@
 export interface Signal {
-  atomIDs: string[];
-  diaIDs: string[];
+  atomIDs: Array<string | number>;
+  diaIDs: Array<string | number>;
   nbAtoms: number;
   delta: number;
-  atomLabel: string;
+  atomLabel?: string;
   js: Array<{
-    assignment: string[];
-    diaID: string;
+    assignment?: string[];
+    diaIDs: Array<string | number>;
     coupling: number;
     multiplicity: string;
     distance: number;

@@ -21,7 +21,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['8'],
-            diaID: 'dieD`JXaBYRYgvzejX@_iB@bUP',
+            diaIDs: ['dieD`JXaBYRYgvzejX@_iB@bUP'],
             coupling: 10.804,
             multiplicity: 'd',
             distance: 3,
@@ -40,7 +40,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['9'],
-            diaID: 'dieD`DyaBYRYVZzffX@_iB@bUP',
+            diaIDs: ['dieD`DyaBYRYVZzffX@_iB@bUP'],
             coupling: 10.804,
             multiplicity: 'd',
             distance: 3,
@@ -67,7 +67,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['7', '8', '9'],
-            diaID: 'daz@`LBYRUejj`A~dHBIU@',
+            diaIDs: ['daz@`LBYRUejj`A~dHBIU@'],
             coupling: 7.062,
             multiplicity: 'q',
             distance: 3,
@@ -86,7 +86,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['10', '11'],
-            diaID: 'daz@`DBYRYmjjhb`GzP`HeT',
+            diaIDs: ['daz@`DBYRYmjjhb`GzP`HeT'],
             coupling: 7.062,
             multiplicity: 't',
             distance: 3,
@@ -123,7 +123,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['9', '10', '11'],
-            diaID: 'dedL`LhPfTeVvjff@GzP`HeT',
+            diaIDs: ['dedL`LhPfTeVvjff@GzP`HeT'],
             coupling: 7.115,
             multiplicity: 'q',
             distance: 3,
@@ -152,7 +152,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['12', '13'],
-            diaID: 'dedL`DhPfTf^vjffbJ@_iB@bUP',
+            diaIDs: ['dedL`DhPfTf^vjffbJ@_iB@bUP'],
             coupling: 7.115,
             multiplicity: 't',
             distance: 3,
@@ -179,7 +179,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['12'],
-            diaID: 'gGQHLIeIUfhRK}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRK}H`QJh'],
             coupling: 1,
             multiplicity: 'd',
             distance: 3,
@@ -187,7 +187,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['11'],
-            diaID: 'gGQHLIeIUfhRS}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRS}H`QJh'],
             coupling: 2,
             multiplicity: 'd',
             distance: 3,
@@ -206,7 +206,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['5', '6', '7'],
-            diaID: 'gGQHLIeIUjdA~dPHeT',
+            diaIDs: ['gGQHLIeIUjdA~dPHeT'],
             coupling: 3,
             multiplicity: 'q',
             distance: 3,
@@ -225,7 +225,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['10'],
-            diaID: 'gGQHDIeIgihA~dPHeT',
+            diaIDs: ['gGQHDIeIgihA~dPHeT'],
             coupling: 1,
             multiplicity: 'd',
             distance: 3,
@@ -233,7 +233,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['11'],
-            diaID: 'gGQHLIeIUfhRS}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRS}H`QJh'],
             coupling: 4,
             multiplicity: 'd',
             distance: 2,
@@ -252,7 +252,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['10'],
-            diaID: 'gGQHDIeIgihA~dPHeT',
+            diaIDs: ['gGQHDIeIgihA~dPHeT'],
             coupling: 2,
             multiplicity: 'd',
             distance: 3,
@@ -260,7 +260,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['12'],
-            diaID: 'gGQHLIeIUfhRK}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRK}H`QJh'],
             coupling: 4,
             multiplicity: 'd',
             distance: 2,
@@ -279,7 +279,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['8', '9'],
-            diaID: 'gGQHDIeIgjfR`OtbADj`',
+            diaIDs: ['gGQHDIeIgjfR`OtbADj`'],
             coupling: 3,
             multiplicity: 't',
             distance: 3,
@@ -306,7 +306,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['12'],
-            diaID: 'gGQHLIeIUfhRK}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRK}H`QJh'],
             coupling: 14.689,
             multiplicity: 'd',
             distance: 3,
@@ -314,7 +314,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['11'],
-            diaID: 'gGQHLIeIUfhRS}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRS}H`QJh'],
             coupling: 7.597,
             multiplicity: 'd',
             distance: 3,
@@ -333,7 +333,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['5', '6', '7'],
-            diaID: 'gGQHLIeIUjdA~dPHeT',
+            diaIDs: ['gGQHLIeIUjdA~dPHeT'],
             coupling: 7.012,
             multiplicity: 'q',
             distance: 3,
@@ -352,7 +352,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['10'],
-            diaID: 'gGQHDIeIgihA~dPHeT',
+            diaIDs: ['gGQHDIeIgihA~dPHeT'],
             coupling: 14.689,
             multiplicity: 'd',
             distance: 3,
@@ -360,7 +360,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['11'],
-            diaID: 'gGQHLIeIUfhRS}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRS}H`QJh'],
             coupling: 2.264,
             multiplicity: 'd',
             distance: 2,
@@ -379,7 +379,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['10'],
-            diaID: 'gGQHDIeIgihA~dPHeT',
+            diaIDs: ['gGQHDIeIgihA~dPHeT'],
             coupling: 7.597,
             multiplicity: 'd',
             distance: 3,
@@ -387,7 +387,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['12'],
-            diaID: 'gGQHLIeIUfhRK}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRK}H`QJh'],
             coupling: 2.264,
             multiplicity: 'd',
             distance: 2,
@@ -406,7 +406,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['8', '9'],
-            diaID: 'gGQHDIeIgjfR`OtbADj`',
+            diaIDs: ['gGQHDIeIgjfR`OtbADj`'],
             coupling: 7.012,
             multiplicity: 't',
             distance: 3,
@@ -433,7 +433,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['12'],
-            diaID: 'gGQHLIeIUfhRK}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRK}H`QJh'],
             coupling: 14.689,
             multiplicity: 'd',
             distance: 3,
@@ -441,7 +441,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['11'],
-            diaID: 'gGQHLIeIUfhRS}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRS}H`QJh'],
             coupling: 1,
             multiplicity: 'd',
             distance: 3,
@@ -460,7 +460,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['5', '6', '7'],
-            diaID: 'gGQHLIeIUjdA~dPHeT',
+            diaIDs: ['gGQHLIeIUjdA~dPHeT'],
             coupling: 2,
             multiplicity: 'q',
             distance: 3,
@@ -479,7 +479,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['10'],
-            diaID: 'gGQHDIeIgihA~dPHeT',
+            diaIDs: ['gGQHDIeIgihA~dPHeT'],
             coupling: 14.689,
             multiplicity: 'd',
             distance: 3,
@@ -487,7 +487,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['11'],
-            diaID: 'gGQHLIeIUfhRS}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRS}H`QJh'],
             coupling: 2.264,
             multiplicity: 'd',
             distance: 2,
@@ -506,7 +506,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['10'],
-            diaID: 'gGQHDIeIgihA~dPHeT',
+            diaIDs: ['gGQHDIeIgihA~dPHeT'],
             coupling: 1,
             multiplicity: 'd',
             distance: 3,
@@ -514,7 +514,7 @@ describe('Test parameters extraction', () => {
           },
           {
             assignment: ['12'],
-            diaID: 'gGQHLIeIUfhRK}H`QJh',
+            diaIDs: ['gGQHLIeIUfhRK}H`QJh'],
             coupling: 2.264,
             multiplicity: 'd',
             distance: 2,
@@ -533,7 +533,7 @@ describe('Test parameters extraction', () => {
         js: [
           {
             assignment: ['8', '9'],
-            diaID: 'gGQHDIeIgjfR`OtbADj`',
+            diaIDs: ['gGQHDIeIgjfR`OtbADj`'],
             coupling: 2,
             multiplicity: 't',
             distance: 3,

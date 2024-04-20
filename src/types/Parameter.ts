@@ -1,5 +1,5 @@
 export interface Parameter {
-  atoms: string[];
+  atoms: Array<string | number>;
   atomIDs: string[];
   value: {
     prediction: number;

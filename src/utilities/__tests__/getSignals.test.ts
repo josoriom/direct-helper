@@ -13,7 +13,7 @@ describe('Setting up signals to perform optimization', () => {
       js: [
         {
           assignment: ['7', '8', '9'],
-          diaID: 'daz@`LBYRUejj`A~dHBIU@',
+          diaIDs: ['daz@`LBYRUejj`A~dHBIU@'],
           coupling: 7.162,
           multiplicity: 'q',
           distance: 3,
@@ -35,7 +35,7 @@ describe('Setting up signals to perform optimization', () => {
       js: [
         {
           assignment: ['10', '11'],
-          diaID: 'daz@`DBYRYmjjhb`GzP`HeT',
+          diaIDs: ['daz@`DBYRYmjjhb`GzP`HeT'],
           coupling: 7.162,
           multiplicity: 't',
           distance: 3,

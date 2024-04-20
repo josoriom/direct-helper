@@ -94,7 +94,7 @@ describe('Test parameters extraction', () => {
       js: [
         {
           assignment: ['7', '8', '9'],
-          diaID: 'daz@`LBYRUejj`A~dHBIU@',
+          diaIDs: ['daz@`LBYRUejj`A~dHBIU@'],
           coupling: 1,
           multiplicity: 'q',
           distance: 3,
@@ -114,7 +114,7 @@ describe('Test parameters extraction', () => {
       js: [
         {
           assignment: ['10', '11'],
-          diaID: 'daz@`DBYRYmjjhb`GzP`HeT',
+          diaIDs: ['daz@`DBYRYmjjhb`GzP`HeT'],
           coupling: 1,
           multiplicity: 't',
           distance: 3,

@@ -14,7 +14,9 @@
                 "assignment": [
                     "12"
                 ],
-                "diaID": "gGQHLIeIUfhRK}H`QJh",
+                "diaIDs": [
+                    "gGQHLIeIUfhRK}H`QJh"
+                ],
                 "coupling": 14.689,
                 "multiplicity": "d",
                 "distance": 3,
@@ -24,7 +26,9 @@
                 "assignment": [
                     "11"
                 ],
-                "diaID": "gGQHLIeIUfhRS}H`QJh",
+                "diaIDs": [
+                    "gGQHLIeIUfhRS}H`QJh"
+                ],
                 "coupling": 7.597,
                 "multiplicity": "d",
                 "distance": 3,
@@ -52,7 +56,9 @@
                     "6",
                     "7"
                 ],
-                "diaID": "gGQHLIeIUjdA~dPHeT",
+                "diaIDs": [
+                    "gGQHLIeIUjdA~dPHeT"
+                ],
                 "coupling": 7.012,
                 "multiplicity": "q",
                 "distance": 3,
@@ -77,7 +83,9 @@
                 "assignment": [
                     "10"
                 ],
-                "diaID": "gGQHDIeIgihA~dPHeT",
+                "diaIDs": [
+                    "gGQHDIeIgihA~dPHeT"
+                ],
                 "coupling": 14.689,
                 "multiplicity": "d",
                 "distance": 3,
@@ -87,7 +95,9 @@
                 "assignment": [
                     "11"
                 ],
-                "diaID": "gGQHLIeIUfhRS}H`QJh",
+                "diaIDs": [
+                    "gGQHLIeIUfhRS}H`QJh"
+                ],
                 "coupling": 2.264,
                 "multiplicity": "d",
                 "distance": 2,
@@ -112,7 +122,9 @@
                 "assignment": [
                     "10"
                 ],
-                "diaID": "gGQHDIeIgihA~dPHeT",
+                "diaIDs": [
+                    "gGQHDIeIgihA~dPHeT"
+                ],
                 "coupling": 7.597,
                 "multiplicity": "d",
                 "distance": 3,
@@ -122,7 +134,9 @@
                 "assignment": [
                     "12"
                 ],
-                "diaID": "gGQHLIeIUfhRK}H`QJh",
+                "diaIDs": [
+                    "gGQHLIeIUfhRK}H`QJh"
+                ],
                 "coupling": 2.264,
                 "multiplicity": "d",
                 "distance": 2,
@@ -150,7 +164,9 @@
                     "8",
                     "9"
                 ],
-                "diaID": "gGQHDIeIgjfR`OtbADj`",
+                "diaIDs": [
+                    "gGQHDIeIgjfR`OtbADj`"
+                ],
                 "coupling": 7.012,
                 "multiplicity": "t",
                 "distance": 3,

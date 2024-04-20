@@ -14,7 +14,9 @@
         "assignment": [
           "8"
         ],
-        "diaID": "dieD`JXaBYRYgvzejX@_iB@bUP",
+        "diaIDs": [
+          "dieD`JXaBYRYgvzejX@_iB@bUP"
+        ],
         "coupling": 10.804,
         "multiplicity": "d",
         "distance": 3,
@@ -39,7 +41,9 @@
         "assignment": [
           "9"
         ],
-        "diaID": "dieD`DyaBYRYVZzffX@_iB@bUP",
+        "diaIDs": [
+          "dieD`DyaBYRYVZzffX@_iB@bUP"
+        ],
         "coupling": 10.804,
         "multiplicity": "d",
         "distance": 3,

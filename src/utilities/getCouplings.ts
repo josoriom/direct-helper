@@ -14,7 +14,7 @@ export function getCouplings(json: Signal[]) {
     for (const coupling of prediction.js) {
       const item: Coupling = { ids: [], coupling: 0, selected: true };
       item.ids = JSON.parse(JSON.stringify(prediction.diaIDs));
-      item.ids.push(coupling.diaID);
+      item.ids.push(coupling.diaIDs[0]);
       item.coupling = coupling.coupling;
       item.selected =
         typeof coupling.selected === 'boolean' ? coupling.selected : true;

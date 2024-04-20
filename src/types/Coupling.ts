@@ -1,5 +1,5 @@
 export interface Coupling {
-  ids: string[];
+  ids: Array<string | number>;
   coupling: number;
   selected?: boolean;
 }
